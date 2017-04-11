@@ -9,7 +9,7 @@ export class AppComponent  {
 
 	role = {
 		roleName : 'Ancien',
-		carte : 'ancien.JPG',
+		carte : '/assets/cartes/ancien.JPG',
 	};
 
 	player = {
@@ -26,77 +26,126 @@ export class AppComponent  {
 			name : 'Roman',
 			role : 'ancien'
 		},
+			{ 
+			name : 'Roman',
+			role : 'ancien'
+		},
+			{ 
+			name : 'Roman',
+			role : 'ancien'
+		},
+			{ 
+			name : 'Roman',
+			role : 'ancien'
+		},
+			{ 
+			name : 'Roman',
+			role : 'ancien'
+		},
+			{ 
+			name : 'Roman',
+			role : 'ancien'
+		},
+			{ 
+			name : 'Roman',
+			role : 'ancien'
+		},
+			{ 
+			name : 'Roman',
+			role : 'ancien'
+		},
+			{ 
+			name : 'Roman',
+			role : 'ancien'
+		},
+			{ 
+			name : 'Roman',
+			role : 'ancien'
+		},
+			{ 
+			name : 'Roman',
+			role : 'ancien'
+		},
+			{ 
+			name : 'Roman',
+			role : 'ancien'
+		},
+			{ 
+			name : 'Roman',
+			role : 'ancien'
+		},
+		
 	];
 
 	roles = [
 		{
 			roleName : 'Ancien',
-			carte : 'ancien.JPG',
+			carte : '/assets/cartes/ancien.JPG',
 			visible : true,
 		},
 		{
 			roleName : 'Bouc Emissaire',
-			carte : 'boucEmissaire.jpg',
+			carte : '/assets/cartes/boucEmissaire.jpg',
 			visible : true,
 		},
 		{
 			roleName : 'Chasseur',
-			carte : 'chasseur.jpg',
+			carte : '/assets/cartes/chasseur.jpg',
 			visible : true,
 		},
 		{
 			roleName : 'Cupidon',
-			carte : 'cupidon.jpg',
+			carte : '/assets/cartes/cupidon.jpg',
 			visible : true,
 		},
 		{
 			roleName : 'Idiot',
-			carte : 'idiot.jpg',
+			carte : '/assets/cartes/idiot.jpg',
 			visible : true,
 		},
 		{
 			roleName : 'Joueur de Flûte',
-			carte : 'joueurFlute.jpg',
+			carte : '/assets/cartes/joueurFlute.jpg',
 			visible : true,
 		},
 		{
 			roleName : 'Loup Garou',
-			carte : 'loupGarou.jpg',
+			carte : '/assets/cartes/loupGarou.jpg',
 			visible : true,
 		},
 		{
 			roleName : 'Maire',
-			carte : 'maire.jpg',
+			carte : '/assets/cartes/maire.jpg',
 			visible : true,
 		},
 		{
 			roleName : 'Petit Fille',
-			carte : 'petiteFille.jpg',
+			carte : '/assets/cartes/petiteFille.jpg',
 			visible : true,
 		},
 		{
 			roleName : 'Salvateur',
-			carte : 'salvateur.jpg',
+			carte : '/assets/cartes/salvateur.jpg',
 			visible : true,
 		},
 		{
 			roleName : 'Sorcière',
-			carte : 'sorciere.jpg',
+			carte : '/assets/cartes/sorciere.jpg',
 			visible : true,
 		},
 		{
 			roleName : 'Villageois',
-			carte : 'villageois.jpg',
+			carte : '/assets/cartes/villageois.jpg',
 			visible : true,
 		},
 		{
 			roleName : 'Voleur',
-			carte : 'voleur.jpg',
+			carte : '/assets/cartes/voleur.jpg',
 			visible : true,
 		},
 		{
 			roleName : 'Voyante',
-			carte : 'voyante.jpg',
+			carte : '/assets/cartes/voyante.jpg',
 			visible : true,
 		},
 	];

@@ -5,4 +5,11 @@ html, body{
 #vote
 {
 	margin:20px;
+	height: 250px;
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
+#imgrole{
+	height: 250px;
+    margin: auto;
+	}    
