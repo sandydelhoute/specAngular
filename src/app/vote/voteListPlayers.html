@@ -1,0 +1,9 @@
+<div class="row">
+	<div class="col-sm-8">
+		{{player.name}}
+	</div>
+	<div class="col-sm-4">
+		<input type="radio" name="playerChoosen" [value]="player.name" (change)="selectedvote(player.name)" />
+		
+	</div>
+</div>

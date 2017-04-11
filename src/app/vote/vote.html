@@ -1,0 +1,13 @@
+<div class="col-xs-12">
+	
+	<voteListPlayers
+		*ngFor="let player of listPlayers" 
+			[player]="player" [vote]="vote"
+
+	>
+		
+	</voteListPlayers>
+
+	<button (click)="validevote()" class="btn btn-primary">Valider</button>
+
+</div>
