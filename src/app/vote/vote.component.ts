@@ -13,7 +13,7 @@ public vote={};
 
 validevote(playerChoosen : HTMLInputElement){
 
-console.log(this.vote.name)
+console.log(this.vote)
 
 }
 	

@@ -4,7 +4,6 @@ import { Component, Input } from '@angular/core';
   selector : 'list',
   templateUrl : './roles.html',
 })
-
-export class Roles{
+export class Roles {
   @Input() role:any;
 }
