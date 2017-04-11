@@ -5,13 +5,20 @@
 
 #tchat{
 	min-height: 500px;
-	background-image: url('assets/img/night.jpg');
+	background-image: url('/assets/img/night.jpg');
 	background-position: center;
 	background-size: 100%;
 	padding:50px;
 	color:white;
 	background-repeat: no-repeat;
+	margin: 20px;
+    border-radius: 10px;
 }
 #tchat input[type="text"] {
 	color:black;
+}
+#tchat #container-message{
+	    height: 400px;
+	    overflow-y: scroll;
+	    overflow-x: hidden;
 }

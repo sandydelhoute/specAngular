@@ -10,11 +10,15 @@
 	</div>
 
 	<div class="col-sm-4">
-
-		<div class="row ">
-			<vote  [listPlayers]="listPlayers" [player]="player"  [role]="role" ></vote>
-		</div>
-
+	<div class="panel panel-default" id="vote">
+                    <div class="panel-heading text-center">
+                        <h3 class="panel-title">Vote</h3>
+                    </div>
+                    <div class="panel-body">
+						<div class="row ">
+							<vote  [listPlayers]="listPlayers" [player]="player"  [role]="role" ></vote>
+						</div>
+	</div>
 	<div class="row">
 		<rolesImg 
 			[role]="role"
