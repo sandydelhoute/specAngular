@@ -1,3 +1,17 @@
 .hidden{
 	display:none;
 }
+
+
+#tchat{
+	min-height: 500px;
+	background-image: url('assets/img/night.jpg');
+	background-position: center;
+	background-size: 100%;
+	padding:50px;
+	color:white;
+	background-repeat: no-repeat;
+}
+#tchat input[type="text"] {
+	color:black;
+}
