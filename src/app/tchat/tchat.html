@@ -1,0 +1,26 @@
+<div class="col-xs-12">
+
+		<div class="row" >
+
+			<listMessages 
+				*ngFor="let message of listmessages" 
+				[message]="message"
+			>
+				
+			</listMessages>
+
+		</div>
+
+		<div class="row">
+			<div #errorMessage class="hidden alert alert-danger">Le champ texte ne peut pas être vide</div>
+			<label>Votre message : </label>
+			<input 
+				type="text" #enterText 
+			/>
+
+			<button 
+				class="btn btn-primary"
+				(click)="submitMessage(enterText.value, errorMessage)"
+			>Envoyer</button>
+		</div>
+</div>

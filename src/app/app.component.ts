@@ -2,6 +2,18 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'my-app',
-  template: `<h1>Loup Garou</h1>`,
+  templateUrl: './layout-accueil.html',
 })
-export class AppComponent  {}
+export class AppComponent  {
+
+	role = {
+		img 	: './cartes/ancien.JPG',
+		name 	: 'Ancien' 
+	};
+
+	player = {
+		name: 'Toto',
+		role: 'loup'
+	};
+
+}
