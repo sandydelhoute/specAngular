@@ -1,74 +1,74 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 
 @Component({
 	selector: 'app-root',
-	templateUrl: './layout-partie.html', 
+	templateUrl: './app.html', 
 	styleUrls: ['./app.component.css']
 })
 export class AppComponent  {
 
+	public ourself 			= {};
+
 	private nbPlayers 		= 0;
-	private minPlayers 		= 6;
+	private minPlayers 		= 1;
 	private nbLoups			= 0;
+	private nbVillageois	= 0;
 
-
-	public role = {
-		roleName : 'Bouc Emissaire',
-		carte : '/assets/cartes/boucEmissaire.jpg',
-	};
-
-	player = {
-		name 	: 'Chasseur',
-		role 	: this.role,
-		isReady : false
-	};
-
-	public listPlayers = [
+	public listPlayers = [/*
 		{ 
 			name 	: 'Sandy',
 			role 	: null,
-			isReady	: false
+			isReady	: false,
+			isMaster: false
 		},
 		{ 
 			name 	: 'Test',
 			role 	: null,
-			isReady	: false
+			isReady	: false,
+			isMaster: false
 		},
 		{ 
 			name 	: 'Truc',
 			role 	: null,
-			isReady	: false
+			isReady	: false,
+			isMaster: false
 		},
 		{ 
 			name 	: 'Roman',
 			role 	: null,
-			isReady	: false
+			isReady	: false,
+			isMaster: false
 		},
 		{ 
 			name 	: 'Machin',
 			role 	: null,
-			isReady	: false
+			isReady	: false,
+			isMaster: false
 		},
 		{ 
 			name 	: 'Bidule',
 			role 	: null,
-			isReady	: false
+			isReady	: false,
+			isMaster: false
 		},
 		{ 
 			name 	: 'Trucmuche',
 			role 	: null,
-			isReady	: false
+			isReady	: false,
+			isMaster: false
 		},
 		{ 
 			name 	: 'Test2',
 			role 	: null,
-			isReady	: false
+			isReady	: false,
+			isMaster: false
 		},
 		{ 
 			name 	: 'Tamere',
 			role 	: null,
-			isReady	: false
-		}		
+			isReady	: false,
+			isMaster: false
+		}*/	
 	];
 
 	listRoles = [
@@ -159,6 +159,12 @@ export class AppComponent  {
 		},
 	];
 
+	buttonState(){
+		if(this.ourself.hasOwnProperty('name'))
+			return true;
+		else 
+			return false;
+	}
 
 	addPlayer(playername:string, errorMessage:HTMLElement){
 
@@ -177,12 +183,13 @@ export class AppComponent  {
 				let newPlayer = {
 					name	: playername,
 					role 	: this.setRandomRole().roleName,
-					isReady : false
+					isReady : false,
+					isMaster: this.setMaster()
 				}
 
 				this.listPlayers.push(newPlayer);
 
-				return newPlayer;
+				this.ourself = newPlayer;
 
 			} else {
 
@@ -192,6 +199,12 @@ export class AppComponent  {
 
 		}
 
+	}
+
+	setMaster(){
+		if(this.listPlayers.length == 0)
+			return true;
+		else return false;
 	}
 
 

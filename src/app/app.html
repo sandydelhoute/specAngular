@@ -1,9 +1,69 @@
-<h1>Hello {{ name }}</h1>
-<p>Coucou {{ role.roleName }} {{ role.carte }}</p>
-<label (click)="enterEditName(roleNameInput)">Changez votre prénom : </label>
-<input #roleNameInput type="text"
-      [value]="role.roleName"
-      (keyup.enter)="editName(firstNameInput.value)"
-      (blur)="editName(roleNameInput.value)"
-      (keyup.escape)="cancelEdit(roleNameInput)" >
+<header class="text-center">
+	<h1>Bienvenue sur le jeu du Loup Garou</h1>
+</header>
+
+<div class="row">
+
+	<div class="col-sm-8 text-center">
+
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">
+				<h3 class="panel-title">Lancement d'une partie</h3>
+			</div>
+
+			<div class="panel-body">
+				<div #errorMessage class="hidden alert alert-danger">Votre nom ne peut pas être vide ou est déjà pris.</div>
+				<label for="nameInput">Merci d'entrer votre pseudo : </label>
+				<input #nameInput type="text" [disabled]="buttonState()" />
+			</div>
+
+			<div class="panel-footer text-center">
+				<button 
+					class="btn btn-primary" 
+					(click)="addPlayer(nameInput.value, errorMessage)" 
+					[disabled]="buttonState()"
+				>Valider</button>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="col-sm-4">
+		<div class="panel panel-default" id="players">
+			<div class="panel-heading text-center">
+				<h3 class="panel-title">Liste des joueurs</h3>
+			</div>
+			<div class="panel-body">
+				<table  width="100%">
+					<thead>
+					<tr>
+						<th>Pseudo</th>
+						<th>Role</th>
+						<th>Prêt ?</th>
+						<th>Maitre du jeu</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr listPlayers class="player"
+							*ngFor="let player of listPlayers" 
+								[player]="player" 
+						>
+						</tr>
+					</tbody>
+				</table>	
+				
+				
+			</div>
+			<div class="panel-footer text-center">
+				<button class="btn btn-primary">Je suis prêt !</button>
+			</div>
+		</div>
+
+		<div *ngIf="(ourself.isMaster) && (listPlayers.lenght >= minPlayers)">
+			<p>Test</p>
+		</div>
+
+
+	</div>
+</div>
 

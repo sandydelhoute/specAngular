@@ -10,6 +10,7 @@ import { Tchat }  		from './tchat/tchat.component';
 import { ListMessages } from './tchat/listmessages.component';
 import { Vote }  		from './vote/vote.component';
 import { VoteListPlayers } from './vote/votelistplayers.component';
+import { ListPlayers } from './players/listplayers.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { VoteListPlayers } from './vote/votelistplayers.component';
     Tchat, 
     ListMessages,
     Vote,
-    VoteListPlayers
+    VoteListPlayers,
+    ListPlayers
   ],
   imports: [
     BrowserModule,
