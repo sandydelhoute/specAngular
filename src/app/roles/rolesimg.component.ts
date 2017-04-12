@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls:['./rolesImg.css']
 })
 export class RolesImg  {
-	@Input() role:any;
+	@Input() player:any;
 
 
 }

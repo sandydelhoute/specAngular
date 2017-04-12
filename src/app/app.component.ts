@@ -8,13 +8,13 @@ import { Component } from '@angular/core';
 export class AppComponent  {
 
 	role = {
-		roleName : 'Ancien',
-		carte : '/assets/cartes/ancien.JPG',
+		roleName : 'Bouc Emissaire',
+		carte : '/assets/cartes/boucEmissaire.jpg',
 	};
 
 	player = {
-		name : 'Ancien',
-		role : 'ancien.JPG',
+		name : 'Chasseur',
+		role : this.role,
 	};
 
 	listPlayers = [
