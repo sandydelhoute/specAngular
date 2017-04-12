@@ -87,19 +87,19 @@ export class AppComponent  {
 		{
 			roleName 	: 'Ancien',
 			carte 		: '/assets/cartes/ancien.JPG',
-			visible 	: true,
+			visible 	: false,
 			max			: 1
 		},
 		{
 			roleName 	: 'Bouc Emissaire',
 			carte 		: '/assets/cartes/boucEmissaire.jpg',
-			visible 	: true,
+			visible 	: false,
 			max			: 1
 		},
 		{
 			roleName 	: 'Chasseur',
 			carte 		: '/assets/cartes/chasseur.jpg',
-			visible 	: true,
+			visible 	: false,
 			max			: 1
 		},
 		{
@@ -111,7 +111,7 @@ export class AppComponent  {
 		{
 			roleName 	: 'Idiot',
 			carte 		: '/assets/cartes/idiot.jpg',
-			visible 	: true,
+			visible 	: false,
 			max			: 1
 		},
 		{
@@ -136,19 +136,19 @@ export class AppComponent  {
 		{
 			roleName 	: 'Salvateur',
 			carte 		: '/assets/cartes/salvateur.jpg',
-			visible 	: true,
+			visible 	: false,
 			max			: 1
 		},
 		{
 			roleName 	: 'Sorcière',
 			carte 		: '/assets/cartes/sorciere.jpg',
-			visible 	: true,
+			visible 	: false,
 			max			: 1
 		},
 		{
 			roleName 	: 'Voleur',
 			carte 		: '/assets/cartes/voleur.jpg',
-			visible 	: true,
+			visible 	: false,
 			max			: 1
 		},
 		{
@@ -208,11 +208,12 @@ export class AppComponent  {
 	}
 
 
-	setReady(player){
+	setReady(player, buttonReady:HTMLElement){
 
 		player = player.isReady = true;
-
 		this.listPlayers[player] = player;
+
+		buttonReady.setAttribute('disabled', 'disabled');
 
 		var ready = this.areTheyReady();
 
@@ -243,17 +244,17 @@ export class AppComponent  {
 
 		var newRole = this.listRoles[Math.floor(Math.random()*this.listRoles.length)];
 
-		if(newRole.visible != true){
+		if(newRole.visible != true){ //Si on tombe sur un role non utilisé
 			newRole =  this.setRandomRole();
 		}
 
 		if(newRole.roleName == 'Loup Garou'){
 			this.nbLoups += 1;
 
-			var maxLoups = Math.round(this.nbPlayers * this.listRoles[1].max); //Recup du nombre maxi de loups
+			var maxLoups = Math.round(this.nbPlayers * this.listRoles[0].max); //Recup du nombre maxi de loups	
 
 			if(this.nbLoups > maxLoups){
-				newRole =  this.setRandomRole();
+				newRole = this.setRandomRole();
 			}
 
 		} else if(newRole.roleName != 'Villageois'){ //Maxi 1 joueur des autres roles
@@ -268,6 +269,8 @@ export class AppComponent  {
 			if(isAvailable != true) {
 				newRole =  this.setRandomRole();
 			}
+		} else if((this.listPlayers.length >= this.minPlayers) && (this.nbLoups == 0) && (newRole.roleName != 'Loup Garou')){
+			newRole = this.setRandomRole(); //Pour avoir au moins 1 loup si + de minPlayers joueurs
 		}
 
 		return newRole;

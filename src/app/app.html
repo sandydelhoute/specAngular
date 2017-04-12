@@ -14,14 +14,17 @@
 			<div class="panel-body">
 				<div #errorMessage class="hidden alert alert-danger">Votre nom ne peut pas être vide ou est déjà pris.</div>
 				<label for="nameInput">Merci d'entrer votre pseudo : </label>
-				<input #nameInput type="text" [disabled]="buttonState()" />
+				<input #nameInput type="text" 
+					
+					(keyup.enter)="addPlayer(nameInput.value, errorMessage)"
+				/>
 			</div>
 
 			<div class="panel-footer text-center">
 				<button 
 					class="btn btn-primary" 
 					(click)="addPlayer(nameInput.value, errorMessage)" 
-					[disabled]="buttonState()"
+					
 				>Valider</button>
 			</div>
 		</div>
@@ -34,7 +37,7 @@
 				<h3 class="panel-title">Liste des joueurs</h3>
 			</div>
 			<div class="panel-body">
-				<table  width="100%">
+				<table width="100%" class="table table-striped">
 					<thead>
 					<tr>
 						<th>Pseudo</th>
@@ -55,7 +58,7 @@
 				
 			</div>
 			<div class="panel-footer text-center">
-				<button class="btn btn-primary" (click)="setReady(ourself)" >Je suis prêt !</button>
+				<button class="btn btn-primary" #buttonReady (click)="setReady(ourself,buttonReady)" >Je suis prêt !</button>
 			</div>
 		</div>
 
