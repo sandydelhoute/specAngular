@@ -1,0 +1,39 @@
+<div class="col-xs-12">
+	<div class="panel panel-default" id="listchannel">
+		<div class="panel-heading text-center">
+			<h3 class="panel-title">Selectionner votre channel</h3>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="row">
+					<div class="col-xs-12 col-sm-3">
+
+						id
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						nombre de joueur
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						nom du channel
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						action
+					</div>
+				</div>
+				<listchannel *ngFor="let channel of listChannel" [channel]="channel"  ></listchannel>
+				
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 text-center">
+		<div class="panel panel-default" id="vote">
+			<div class="panel-heading text-center">
+				<h3 class="panel-title">Crée votre channel</h3>
+			</div>
+			<div class="panel-body">
+				<input type='text' #nameChannel />
+				<button  (click)="createChannel(nameChannel.value)" class="btn btn-primary">envoye</button>
+			</div>
+		</div>
+	</div>
+</div>

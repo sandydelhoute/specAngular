@@ -7,7 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class Vote  {
 	@Input() player:any;
-	@Input() role:any;
 	@Input() listPlayers:any;
 public vote={};
 
