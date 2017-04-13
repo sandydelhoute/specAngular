@@ -39,7 +39,7 @@
 					<h3 class="panel-title">Sélectionnez votre channel</h3>
 				</div>
 				<div class="panel-body">
-					<div #errorAccessChannel class="hidden alert alert-danger">Le channel est innaccessible :  {{errorChannel}}</div>
+					<div #errorAccessChannel class="hidden alert alert-danger">{{errorChannel}}</div>
 					<table class="table tabled-striped">
 						<thead>
 							<tr>
@@ -58,7 +58,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr listchannel *ngFor="let channel of listChannel" [channel]="channel" [azerty]="buttonState()" ></tr>
+							<tr listchannel *ngFor="let channel of listChannel" [channel]="channel" [testButton]="buttonState()" ></tr>
 						</tbody>
 					</table>
 				</div>
