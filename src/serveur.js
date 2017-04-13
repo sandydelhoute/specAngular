@@ -142,12 +142,12 @@ io.sockets.on('connection', function (socket) {
             });*/
             listPlayer.push(socket.id);
             listChannel.push({name:channelName,nbrPlayer:listPlayer.length,limitPlayer:15,listPlayer:listPlayer,id:listChannel.length,partie:{status:false}});
-            socket.emit('statusCreateChannel',true);      
+            socket.emit('statusCreateChannel',{create:true,name:channelName});      
         }
         else
         {
             console.log("Error Create Channel")
-            socket.emit('statusCreateChannel',false);
+            socket.emit('statusCreateChannel',{create:false});
         }
     });
 
