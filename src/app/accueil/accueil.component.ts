@@ -15,16 +15,15 @@ export class Accueil implements OnInit {
 	private error;
 	private socket :any = io('http://localhost:3000');
 	private listChannel;
-	public ourself = { name : '' };
+	public ourself = {};
 
 	constructor(private channelService : ChannelService,private router : Router)
 	{
 	}
 
 	ngOnInit() {
-		this.channelService.accesChannel().subscribe(()=>{
-			console.log("acces true");
-			 this.router.navigate(['/channel']);
+		this.channelService.accesChannel().subscribe((user)=>{
+		this.ourself=user;
 		});
 
 		this.channelService.callListChannel();

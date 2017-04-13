@@ -104,7 +104,7 @@ io.sockets.on('connection', function (socket) {
         if(!usersNameUsed){
             console.log('acces');
             listUsers.push({'name':playerName,'id':socket.id});
-            socket.emit("accesChannel");
+            socket.emit("accesChannel",{'name':playerName,'id':socket.id});
 
         }
         else

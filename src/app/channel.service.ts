@@ -10,9 +10,8 @@ export class ChannelService {
 	constructor() { }
 	accesChannel(){
 		let observerAccesChannel = new Observable((observer) => {
-			this.socket.on('accesChannel',() =>{
-				console.log("acces true");
-				observer.next();
+			this.socket.on('accesChannel',(user) =>{
+				observer.next(user);
 			});
 		});
 		return observerAccesChannel;
