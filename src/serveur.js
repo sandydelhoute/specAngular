@@ -87,17 +87,12 @@ const roles = [
 
 io.sockets.on('connection', function (socket) {
     socket.on('addPlayer',(playerName)=>{
-        var usersNameUsed=false;
+        var usersNameUsed = false;
         listUsers.map(function(player){
             if(playerName == player.name)
             {
                 console.log('userexist');
                 usersNameUsed=true;
-            }
-            else
-            {
-                console.log('usersnoexist');
-                usersNameUsed = false;
             }
 
         })
@@ -115,17 +110,13 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('createChannel',(channelName)=>{
-        var existChannelName;
+        var existChannelName = false;
         var listPlayer=[];
 
         listChannel.map(function(channel){
             if(channelName == channel.name)
             {
                 existChannelName = true;
-            }
-            else
-            {
-                existChannelName = false;
             }
 
         })
@@ -142,7 +133,7 @@ io.sockets.on('connection', function (socket) {
             });*/
             listPlayer.push(socket.id);
             listChannel.push({name:channelName,nbrPlayer:listPlayer.length,limitPlayer:15,listPlayer:listPlayer,id:listChannel.length,partie:{status:false}});
-            socket.emit('statusCreateChannel',{create:true,name:channelName});      
+            socket.emit('statusCreateChannel',{create:true,name:channelName});
         }
         else
         {

@@ -26,8 +26,7 @@ constructor(private partieService : PartieService,private route: ActivatedRoute,
 
 
 
-  private listPlayers=[{name:'sandy',isReady:false,},{name:'lolo',isReady:false,
-}];
+  private listPlayers=[{name:'sandy',isReady:false,},{name:'lolo',isReady:false,}];
 
 
   	setMaster(){

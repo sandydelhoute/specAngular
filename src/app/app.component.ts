@@ -18,14 +18,6 @@ export class AppComponent  {
 	public listRoles		= [];
 
 
-
-	setMaster(){
-		if(this.listPlayers.length == 0)
-			return true;
-		else return false;
-	}
-
-
 	setRandomRole(){
 
 		this.nbPlayers = this.listPlayers.length + 1;

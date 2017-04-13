@@ -33,11 +33,12 @@ export class Accueil implements OnInit {
 		this.channelService.noAccessChannel().subscribe((boolAccess:boolean)=>{
 			this.ourself = {name:null};
 		});
-		this.channelService.statusCreateChannel().subscribe((status)=>{
-			if(status)
+		this.channelService.statusCreateChannel().subscribe((status:any)=>{
+			if(status.create)
 			{
+
 				console.log("create channel ok ");
-				this.router.navigate(['waitplayer',status]);
+				this.router.navigate(['waitplayer',status.name]);
 			}
 			else
 			{
@@ -50,7 +51,7 @@ export class Accueil implements OnInit {
 			console.log(accessJoinChannel);
 			if(accessJoinChannel)
 			{
-				this.router.navigate(['/waitPlayer']);
+				this.router.navigate(['/waitPlayer', statut.name]);
 			}
 			else
 			{
