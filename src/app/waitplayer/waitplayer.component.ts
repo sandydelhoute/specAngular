@@ -18,9 +18,9 @@ constructor(private partieService : PartieService,private route: ActivatedRoute,
 
   ngOnInit() {
 
-    this.route.snapshot.params['id'];
-    console.log(this.route.snapshot.data['type']);
     this.route.snapshot.data['type'];
+    this.partieService.getListUser(this.route.snapshot.data['name']
+)
 
   }
 

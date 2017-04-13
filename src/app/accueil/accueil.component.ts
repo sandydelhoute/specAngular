@@ -34,7 +34,7 @@ export class Accueil implements OnInit {
 		this.channelService.statusCreateChannel().subscribe((status:any)=>{
 			if(status.create)
 			{
-				this.router.navigate(['waitplayer',status]);
+				this.router.navigate(['waitplayer',status.name]);
 			}
 			else
 			{

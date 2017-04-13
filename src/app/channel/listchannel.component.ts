@@ -24,7 +24,7 @@ export class ListChannel implements OnInit {
 			console.log(status);
 			if(status.access)
 			{
-				this.router.navigate(['waitPlayer', status]);
+				this.router.navigate(['waitPlayer', status.name]);
 			}
 			else
 			{
