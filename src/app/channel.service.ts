@@ -57,6 +57,17 @@ export class ChannelService {
 		return observerAccesJoinChannel;
 	}
 
+	noAccessChannel(){
+		let observerNoAccesChannel= new Observable((observer)=>{
+			this.socket.on('accesJoinChannel',()=>{
+				observer.next(false);
+			})
+
+		});
+		return observerNoAccesChannel;
+
+	}
+
 	
 
 }

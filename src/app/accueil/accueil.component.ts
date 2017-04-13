@@ -15,20 +15,23 @@ export class Accueil implements OnInit {
 	private error;
 	private socket :any = io('http://localhost:3000');
 	private listChannel;
-	public ourself = {};
+	public ourself = {name:null};
 
 	constructor(private channelService : ChannelService,private router : Router)
 	{
 	}
 
 	ngOnInit() {
-		this.channelService.accesChannel().subscribe((user)=>{
-		this.ourself=user;
+		this.channelService.accesChannel().subscribe((user:any)=>{
+			this.ourself.name=user.name;
 		});
 
 		this.channelService.callListChannel();
 		this.channelService.listChannel().subscribe((listChannel)=>{
 			this.listChannel=listChannel;
+		});
+		this.channelService.noAccessChannel().subscribe((boolAccess:boolean)=>{
+			this.ourself = {name:null};
 		});
 		this.channelService.statusCreateChannel().subscribe((status)=>{
 			if(status)
@@ -59,7 +62,7 @@ export class Accueil implements OnInit {
 	}
 
 	buttonState(inverted = false){
-		if(this.ourself.hasOwnProperty('name') && this.ourself.name != ''){
+		if(this.ourself.hasOwnProperty('name') && this.ourself.name != null){
 			if(typeof inverted != 'undefined' && inverted == true)
 				return false;
 			else
@@ -81,7 +84,6 @@ export class Accueil implements OnInit {
 			
 			this.buttonState();
 			this.socket.emit('addPlayer',playername);
-
 			this.ourself.name = playername;
 
 		} else {
