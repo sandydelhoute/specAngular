@@ -32,6 +32,10 @@ import { ListPlayers } from './players/listplayers.component';
     ListMessages,
     Vote,
     VoteListPlayers,
+    Partie,
+    Channel,
+    ListChannel,
+    Accueil,
     ListPlayers
   ],
   imports: [
