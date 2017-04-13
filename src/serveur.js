@@ -7,10 +7,10 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static(__dirname));
 http.listen(PORT, () => console.log('Le serveur a demaré'));
 
-
+const nbLoups = 0;
 const listChannel=[];
 const listUsers = [];
-const roles = [
+const listRoles = [
 {
     roleName : 'Ancien',
     carte : '/assets/cartes/ancien.JPG',
@@ -131,13 +131,16 @@ io.sockets.on('connection', function (socket) {
             }
 
             });*/
-            listPlayer.push(socket.id);
-            listChannel.push({name:channelName,nbrPlayer:listPlayer.length,limitPlayer:15,listPlayer:listPlayer,id:listChannel.length,partie:{status:false}});
+            var user={id:socket.id,isMaster:true,isReady:false};
+            socket.join(channelName);
+            channel={name:channelName,nbrPlayer:listPlayer.length,limitPlayer:15,minPlayer:6,listPlayer:listPlayer,id:listChannel.length,partie:{status:false}};
+            user.role=setRandomRole(channel);
+            listPlayer.push(user);
+            listChannel.push(channel);
             socket.emit('statusCreateChannel',{create:true,name:channelName});
         }
         else
         {
-            console.log("Error Create Channel")
             socket.emit('statusCreateChannel',{create:false});
         }
     });
@@ -164,9 +167,13 @@ io.sockets.on('connection', function (socket) {
         }
         else
         {
-            currentChannel.listPlayer.push(socket.id);
+            var user={id:socket.id,isMaster:false,isReady:false};
+            user.role=setRandomRole(channel);
+            currentChannel.listPlayer.push(user);
+            socket.join(channelName);
             socket.emit('accessJoinChannel',{access:true, name:channelName});
         }
+
 
 
     });
@@ -176,3 +183,42 @@ io.sockets.on('connection', function (socket) {
     });
 
 });
+function setRandomRole(channel){
+
+        channel.nbrPlayer = channel.listPlayer.length + 1;
+
+        var newRole = listRoles[Math.floor(Math.random()*listRoles.length)];
+
+        if(newRole.visible != true){ //Si on tombe sur un role non utilisé
+            newRole =  this.setRandomRole();
+        }
+
+        if(newRole.roleName == 'Loup Garou'){
+            nbLoups += 1;
+
+            var maxLoups = Math.round(this.nbPlayers * channel.listRoles[0].max); //Recup du nombre maxi de loups  
+
+            if(nbLoups > maxLoups){
+                newRole = this.setRandomRole();
+            }
+
+        } else if(newRole.roleName != 'Villageois'){ //Maxi 1 joueur des autres roles
+
+            var isAvailable = true;
+
+            console.log(channel.listPlayer);
+            channel.listPlayer.map(function(player){
+                if(player.role == newRole.roleName)
+                    isAvailable = false;
+            });
+
+            if(isAvailable != true) {
+                newRole =  this.setRandomRole();
+            }
+        } else if((channel.listPlayers.length >= this.minPlayer) && (this.nbLoups == 0) && (newRole.roleName != 'Loup Garou')){
+            newRole = this.setRandomRole(); //Pour avoir au moins 1 loup si + de minPlayers joueurs
+        }
+
+        return newRole;
+
+    }
