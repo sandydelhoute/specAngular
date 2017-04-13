@@ -59,11 +59,19 @@ export class Accueil implements OnInit {
 
 	}
 
-	buttonState(){
-		if(this.ourself.hasOwnProperty('name') && this.ourself.name != '')
-			return true;
-		else 
-			return false;
+	buttonState(inverted = false){
+		if(this.ourself.hasOwnProperty('name') && this.ourself.name != ''){
+			if(typeof inverted != 'undefined' && inverted == true)
+				return false;
+			else
+				return true;
+		}
+		else {
+			if(typeof inverted != 'undefined' && inverted == true)
+				return true;
+			else
+				return false;
+		}
 	}
 
 	addPlayer(playername:string, errorMessage:HTMLElement){
