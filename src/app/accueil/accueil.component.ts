@@ -14,6 +14,8 @@ export class Accueil implements OnInit {
 
 	private error;
 	private socket :any = io('http://localhost:3000');
+	private listChannel;
+	public ourself = { name : '' };
 
 	constructor(private channelService : ChannelService,private router : Router)
 	{
@@ -24,12 +26,72 @@ export class Accueil implements OnInit {
 			console.log("acces true");
 			 this.router.navigate(['/channel']);
 		});
+
+		this.channelService.callListChannel();
+		this.channelService.listChannel().subscribe((listChannel)=>{
+			this.listChannel=listChannel;
+		});
+		this.channelService.statusCreateChannel().subscribe((status)=>{
+			if(status)
+			{
+				console.log("create channel ok ");
+				this.router.navigate(['waitplayer']);
+			}
+			else
+			{
+				console.log("create channel error");
+			}
+
+		});
 		
-	}
-	addplayer(pseudoPlayer:string){
-		this.socket.emit('addPlayer',pseudoPlayer);
-		this.router.navigate(['/channel']);
+		this.channelService.accessJoinChannel().subscribe((accessJoinChannel)=>{
+			console.log(accessJoinChannel);
+			if(accessJoinChannel)
+			{
+				this.router.navigate(['/waitPlayer']);
+			}
+			else
+			{
+				console.log("erroracceschannel");
+			}
+
+		});
 
 	}
+
+	buttonState(){
+		if(this.ourself.hasOwnProperty('name') && this.ourself.name != '')
+			return true;
+		else 
+			return false;
+	}
+
+	addPlayer(playername:string, errorMessage:HTMLElement){
+
+		if(typeof playername != 'undefined' && playername != ''){
+
+			errorMessage.classList.add('hidden');
+			
+			this.buttonState();
+			this.socket.emit('addPlayer',playername);
+
+			this.ourself.name = playername;
+
+		} else {
+
+			errorMessage.classList.remove('hidden');
+
+		}
+
+	}
+
+	createChannel(nameChannel : string ){
+		this.channelService.createChannel(nameChannel);
+	}
+
+	joinChannel(channelName:string){
+		this.channelService.callJoinChannel(channelName);
+	}
+	
 
 }

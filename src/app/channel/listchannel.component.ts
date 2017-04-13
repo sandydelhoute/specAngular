@@ -3,7 +3,7 @@ import {Router } from '@angular/router';
 import { ChannelService } from '../channel.service';
 
 @Component({
-	selector: 'listchannel',
+	selector: '[listchannel]',
 	templateUrl: './listchannel.html',
 	providers:[ChannelService]
 

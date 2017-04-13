@@ -15,7 +15,7 @@
 				<div #errorMessage class="hidden alert alert-danger">Votre nom ne peut pas être vide ou est déjà pris.</div>
 				<label for="nameInput">Merci d'entrer votre pseudo : </label>
 				<input #nameInput type="text" 
-					
+					[disabled]="buttonState()" 
 					(keyup.enter)="addPlayer(nameInput.value, errorMessage)"
 				/>
 			</div>
@@ -24,7 +24,7 @@
 				<button 
 					class="btn btn-primary" 
 					(click)="addPlayer(nameInput.value, errorMessage)" 
-					
+					[disabled]="buttonState()"
 				>Valider</button>
 			</div>
 		</div>

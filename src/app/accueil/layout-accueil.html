@@ -1,14 +1,80 @@
+<header class="text-center">
+	<h1>Bienvenue sur le jeu du Loup Garou</h1>
+</header>
+
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="pr-wrap">
-                <div class="pass-reset">
-                    <label>
-                        Enter pseudo</label>
-                    <input type="text" #pseudoPlayer placeholder="pseudo" />
-                    <button (click)="addplayer(pseudoPlayer.value)"  class="btn btn-primary" >valide</button>
-                </div>
-            </div>
-        </div>
-     </div>
+	<div class="row">
+
+		<div class="col-sm-8 text-center">
+
+			<div class="panel panel-default">
+				<div class="panel-heading text-center">
+					<h3 class="panel-title">Lancement d'une partie</h3>
+				</div>
+
+				<div class="panel-body">
+					<div #errorMessage class="hidden alert alert-danger">Votre nom ne peut pas être vide ou est déjà pris.</div>
+					<label for="nameInput">Merci d'entrer votre pseudo : </label>
+					<input #nameInput type="text" 
+						[disabled]="buttonState()" 
+						(keyup.enter)="addPlayer(nameInput.value, errorMessage)"
+					/>
+				</div>
+
+				<div class="panel-footer text-center">
+					<button 
+						class="btn btn-primary" 
+						[disabled]="buttonState()"
+						(click)="addPlayer(nameInput.value, errorMessage)" 
+					>Valider</button>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- List channels -->
+		<div class="col-sm-4">
+			<div class="panel panel-default" id="listchannel">
+				<div class="panel-heading text-center">
+					<h3 class="panel-title">Sélectionnez votre channel</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table tabled-striped">
+						<thead>
+							<tr>
+								<th>
+									Id
+								</th>
+								<th>
+									Nombre de joueur(s)
+								</th>
+								<th>
+									Nom du channel
+								</th>
+								<th>
+									Action
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr listchannel *ngFor="let channel of listChannel" [channel]="channel" ></tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col-xs-12 text-center">
+				<div class="panel panel-default" id="vote">
+					<div class="panel-heading text-center">
+						<h3 class="panel-title">Crée votre channel</h3>
+					</div>
+					<div class="panel-body">
+						<input type='text' #nameChannel />
+						<button  (click)="createChannel(nameChannel.value)" class="btn btn-primary">Créer</button>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
 </div>
