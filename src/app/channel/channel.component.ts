@@ -12,14 +12,15 @@ export class Channel implements OnInit {
 
 	private listChannel;
 
-		constructor(private channelService : ChannelService,private router :Router)
+	constructor(private channelService : ChannelService,private router :Router)
 	{
 	}
 
-		createChannel(nameChannel : string ){
-		this.channelService.createChannel(nameChannel);
+	createChannel(nameChannel : string ){
+	this.channelService.createChannel(nameChannel);
 		}
-		ngOnInit() {
+	
+	ngOnInit() {
 
 		this.channelService.callListChannel();
 		this.channelService.listChannel().subscribe((listChannel)=>{

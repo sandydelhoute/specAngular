@@ -11,6 +11,7 @@ import { ChannelService } from '../channel.service';
 })
 export class ListChannel implements OnInit {
 	@Input() channel:any;
+	@Input() azerty:any;
 	constructor(private channelService : ChannelService,private router : Router)
 	{
 	}
