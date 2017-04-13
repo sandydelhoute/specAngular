@@ -2,8 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'vote',
-  templateUrl: './vote.html',
-
+  templateUrl: './vote.html'
 })
 export class Vote  {
 	@Input() player:any;
