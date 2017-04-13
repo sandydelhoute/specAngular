@@ -168,7 +168,7 @@ io.sockets.on('connection', function (socket) {
         else
         {
             var user={id:socket.id,isMaster:false,isReady:false};
-            user.role=setRandomRole(channel);
+            user.role=setRandomRole(currentChannel);
             currentChannel.listPlayer.push(user);
             socket.join(channelName);
             socket.emit('accessJoinChannel',{access:true, name:channelName});
@@ -190,7 +190,7 @@ function setRandomRole(channel){
         var newRole = listRoles[Math.floor(Math.random()*listRoles.length)];
 
         if(newRole.visible != true){ //Si on tombe sur un role non utilisé
-            newRole =  this.setRandomRole();
+            newRole =  this.setRandomRole(channel);
         }
 
         if(newRole.roleName == 'Loup Garou'){
@@ -199,7 +199,7 @@ function setRandomRole(channel){
             var maxLoups = Math.round(this.nbPlayers * channel.listRoles[0].max); //Recup du nombre maxi de loups  
 
             if(nbLoups > maxLoups){
-                newRole = this.setRandomRole();
+                newRole = this.setRandomRole(channel);
             }
 
         } else if(newRole.roleName != 'Villageois'){ //Maxi 1 joueur des autres roles
@@ -213,10 +213,10 @@ function setRandomRole(channel){
             });
 
             if(isAvailable != true) {
-                newRole =  this.setRandomRole();
+                newRole =  this.setRandomRole(channel);
             }
         } else if((channel.listPlayers.length >= this.minPlayer) && (this.nbLoups == 0) && (newRole.roleName != 'Loup Garou')){
-            newRole = this.setRandomRole(); //Pour avoir au moins 1 loup si + de minPlayers joueurs
+            newRole = this.setRandomRole(channel); //Pour avoir au moins 1 loup si + de minPlayers joueurs
         }
 
         return newRole;
