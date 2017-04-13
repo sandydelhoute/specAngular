@@ -95,8 +95,13 @@ export class Accueil implements OnInit {
 
 	}
 
-	createChannel(nameChannel : string ){
-		this.channelService.createChannel(nameChannel);
+	createChannel(nameChannel : string, errorMessage:HTMLElement ){
+		if(nameChannel != ''){
+			errorMessage.classList.add('hidden');
+			this.channelService.createChannel(nameChannel);
+		} else {
+			errorMessage.classList.remove('hidden');
+		}
 	}
 
 	joinChannel(channelName:string){

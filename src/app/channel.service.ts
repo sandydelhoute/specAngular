@@ -30,8 +30,10 @@ export class ChannelService {
 	callListChannel(){
 		this.socket.emit('callListChannel');
 	}
-	createChannel(nameChannel){
-		this.socket.emit('createChannel',nameChannel);
+	createChannel(nameChannel:string){
+		if(nameChannel != ''){
+			this.socket.emit('createChannel',nameChannel);
+		} else return null;
 	}
 	statusCreateChannel(){
 		let observerStatusCreateServer=new Observable((observer)=>{
