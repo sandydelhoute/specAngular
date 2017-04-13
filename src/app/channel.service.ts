@@ -49,27 +49,14 @@ export class ChannelService {
 	}
 	accessJoinChannel(){
 		let observerAccesJoinChannel= new Observable((observer)=>{
-			this.socket.on('accesJoinChannel',(accessJoinChannel)=>{
-				console.log(accessJoinChannel);
-				observer.next(accessJoinChannel);
-
+			this.socket.on('accessJoinChannel',(status:any)=>{
+				console.log("je suis dans le join channel");
+				observer.next(status);
 			})
 
 		});
 		return observerAccesJoinChannel;
 	}
-
-	noAccessChannel(){
-		let observerNoAccesChannel= new Observable((observer)=>{
-			this.socket.on('accesJoinChannel',()=>{
-				observer.next(false);
-			})
-
-		});
-		return observerNoAccesChannel;
-
-	}
-
 	
 
 }

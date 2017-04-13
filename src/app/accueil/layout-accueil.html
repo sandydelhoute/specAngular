@@ -39,6 +39,7 @@
 					<h3 class="panel-title">Sélectionnez votre channel</h3>
 				</div>
 				<div class="panel-body">
+					<div #errorAccessChannel class="hidden alert alert-danger">Le channel est innaccessible :  {{errorChannel}}</div>
 					<table class="table tabled-striped">
 						<thead>
 							<tr>
@@ -69,8 +70,16 @@
 					</div>
 					<div class="panel-body">
 						<div #errorNameNull class="hidden alert alert-danger">Merci de rentrer un nom pour votre chanel</div>
-						<input type='text' #nameChannel [disabled]="buttonState(true)" />
-						<button [disabled]="buttonState(true)" (click)="createChannel(nameChannel.value, errorNameNull)" class="btn btn-primary">Créer</button>
+						<input type='text' 
+							#nameChannel [disabled]="buttonState(true)" 
+							(keyup.enter)="createChannel(nameChannel.value, errorNameNull)" 
+							/>
+						<button 
+							[disabled]="buttonState(true)" 
+							(click)="createChannel(nameChannel.value, errorNameNull)" 
+							class="btn btn-primary"
+						>
+						Créer</button>
 					</div>
 				</div>
 			</div>

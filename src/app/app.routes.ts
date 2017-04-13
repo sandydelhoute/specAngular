@@ -8,5 +8,5 @@ export const routes: Routes = [
   { path: '', component: Accueil },
   { path: 'channel', component: Channel },
   { path: 'partie', component: Partie },
-  { path: 'waitplayer', component: WaitPlayer,data:{ name }}
+  { path: 'waitplayer', component: WaitPlayer,data: name }
 ];

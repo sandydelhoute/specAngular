@@ -19,11 +19,11 @@ export class ListChannel implements OnInit {
 		this.channelService.callJoinChannel(channelName);
 	}
 	ngOnInit(){
-		this.channelService.accessJoinChannel().subscribe((accessJoinChannel)=>{
-			console.log(accessJoinChannel);
-			if(accessJoinChannel)
+		this.channelService.accessJoinChannel().subscribe((status:any)=>{
+			console.log(status);
+			if(status.access)
 			{
-				this.router.navigate(['/waitPlayer']);
+				this.router.navigate(['waitPlayer', status]);
 			}
 			else
 			{

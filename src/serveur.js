@@ -156,16 +156,16 @@ io.sockets.on('connection', function (socket) {
         })
         if(currentChannel.nbrPlayer >= currentChannel.limitPlayer)
         {
-            socket.emit('accessJoinChannel',{access:false,msg:'le channel est complet'});
+            socket.emit('accessJoinChannel',{access:false,msg:'Le channel est complet'});
         }
         else if(currentChannel.partie.status)
         {
-            socket.emit('accessJoinChannel',{access:false,msg:'partie déjâ en cours'});
+            socket.emit('accessJoinChannel',{access:false,msg:'La partie est déjâ en cours'});
         }
         else
         {
             currentChannel.listPlayer.push(socket.id);
-            socket.emit('accessJoinChannel',{access:true});
+            socket.emit('accessJoinChannel',{access:true, name:channelName});
         }
 
 

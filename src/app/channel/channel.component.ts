@@ -25,18 +25,6 @@ export class Channel implements OnInit {
 		this.channelService.listChannel().subscribe((listChannel)=>{
 			this.listChannel=listChannel;
 		});
-		this.channelService.statusCreateChannel().subscribe((status)=>{
-			if(status)
-			{
-				console.log("create channel ok ");
-				this.router.navigate(['waitplayer']);
-			}
-			else
-			{
-				console.log("create channel error");
-			}
 
-		});
-		
 	}
 }

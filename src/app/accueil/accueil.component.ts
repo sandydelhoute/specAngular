@@ -15,6 +15,7 @@ export class Accueil implements OnInit {
 
 	private error;
 	private listChannel;
+	private errorChannel;
 	public ourself = {name:null};
 
 	constructor(private channelService : ChannelService,private loginService : LoginService,private router : Router)
@@ -30,35 +31,18 @@ export class Accueil implements OnInit {
 		this.channelService.listChannel().subscribe((listChannel)=>{
 			this.listChannel=listChannel;
 		});
-		this.channelService.noAccessChannel().subscribe((boolAccess:boolean)=>{
-			this.ourself = {name:null};
-		});
 		this.channelService.statusCreateChannel().subscribe((status:any)=>{
 			if(status.create)
 			{
-
-				console.log("create channel ok ");
-				this.router.navigate(['waitplayer',status.name]);
+				this.router.navigate(['waitplayer',status]);
 			}
 			else
 			{
-				console.log("create channel error");
+				this.errorChannel = status.msg;
 			}
 
 		});
 		
-		this.channelService.accessJoinChannel().subscribe((accessJoinChannel)=>{
-			console.log(accessJoinChannel);
-			if(accessJoinChannel)
-			{
-				this.router.navigate(['/waitPlayer', statut.name]);
-			}
-			else
-			{
-				console.log("erroracceschannel");
-			}
-
-		});
 
 	}
 
