@@ -17,7 +17,7 @@ export class LoginService {
 		});
 		return observerErrorPlayer;
 	}
-	addPlayer(playername){
+	addPlayer(playername:string){
 		this.socket.emit('addPlayer',playername);
 	}
 }
