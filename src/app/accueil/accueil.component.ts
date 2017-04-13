@@ -1,23 +1,23 @@
 import { Component,Input,OnInit} from '@angular/core';
-import { ChannelService } from '../channel.service';
 import { Router } from '@angular/router';
 import {Observable} from 'rxjs/Observable';
+import { LoginService } from '../login.service';
+import { ChannelService } from '../channel.service';
 import * as io from "socket.io-client";
 
 @Component({
   	selector: 'accueil',
   	templateUrl: './layout-accueil.html',
-	providers:[ChannelService]
+	providers:[ChannelService,LoginService]
 
 })
 export class Accueil implements OnInit {
 
 	private error;
-	private socket :any = io('http://localhost:3000');
 	private listChannel;
 	public ourself = {name:null};
 
-	constructor(private channelService : ChannelService,private router : Router)
+	constructor(private channelService : ChannelService,private loginService : LoginService,private router : Router)
 	{
 	}
 
@@ -37,7 +37,7 @@ export class Accueil implements OnInit {
 			if(status)
 			{
 				console.log("create channel ok ");
-				this.router.navigate(['waitplayer']);
+				this.router.navigate(['waitplayer',status]);
 			}
 			else
 			{
@@ -82,9 +82,10 @@ export class Accueil implements OnInit {
 
 			errorMessage.classList.add('hidden');
 			
-			this.buttonState();
-			this.socket.emit('addPlayer',playername);
 			this.ourself.name = playername;
+			this.loginService.addPlayer(playername);
+
+			this.buttonState();
 
 		} else {
 

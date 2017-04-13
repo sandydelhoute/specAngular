@@ -1,1 +1,38 @@
-waitplayer.html
+<div class="col-sm-4">
+		<div class="panel panel-default" id="players">
+			<div class="panel-heading text-center">
+				<h3 class="panel-title">Liste des joueurs</h3>
+			</div>
+			<div class="panel-body">
+				<table width="100%" class="table table-striped">
+					<thead>
+					<tr>
+						<th>Pseudo</th>
+						<th>Role</th>
+						<th>Prêt ?</th>
+						<th>Maitre du jeu</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr listPlayers class="player"
+							*ngFor="let player of listPlayers" 
+								[player]="player" 
+						>
+						</tr>
+					</tbody>
+				</table>	
+				
+				
+			</div>
+			<div class="panel-footer text-center">
+				<button class="btn btn-primary" #buttonReady (click)="setReady(ourself,buttonReady)" >Je suis prêt !</button>
+			</div>
+		</div>
+
+		<div *ngIf="(ourself.isMaster) && (listPlayers.lenght >= minPlayers)">
+			<p>Test</p>
+		</div>
+
+
+	</div>
+

@@ -1,5 +1,5 @@
-import { Component,Input} from '@angular/core';
-import { Router } from '@angular/router';
+import { Component,Input,OnInit} from '@angular/core';
+import { Router,ActivatedRoute, Params, Data } from '@angular/router';
 import { PartieService } from '../partie.service';
 
 @Component({
@@ -8,10 +8,63 @@ import { PartieService } from '../partie.service';
 	providers:[PartieService]
 })
 
-export class WaitPlayer {
+export class WaitPlayer implements OnInit {
 
-constructor(private partieService : PartieService, private router :Router)
+private ourself={isMaster:true};
+constructor(private partieService : PartieService,private route: ActivatedRoute,
+    private router: Router)
 	{
 	}
+
+  ngOnInit() {
+
+    this.route.snapshot.params['id'];
+    console.log(this.route.snapshot.data['type']);
+    this.route.snapshot.data['type'];
+
+  }
+
+
+
+  private listPlayers=[{name:'sandy',isReady:false,},{name:'lolo',isReady:false,
+}];
+
+
+  	setMaster(){
+		if(this.listPlayers.length == 0)
+			return true;
+		else return false;
+	}
+
+
+	setReady(player, buttonReady:HTMLElement){
+
+		player = player.isReady = true;
+		this.listPlayers[player] = player;
+
+		buttonReady.setAttribute('disabled', 'disabled');
+
+		var ready = this.areTheyReady();
+
+		if(ready == true)
+			this.launchParty();
+
+	}
+
+	areTheyReady(){
+		var allAreReady = true;
+
+		this.listPlayers.forEach(function(player){
+			if(player.isReady != true)
+				allAreReady = false;
+		});
+
+		return allAreReady;
+
+	}
+
+	launchParty(){}
+
+
 		
 }
