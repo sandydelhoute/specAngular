@@ -15,71 +15,85 @@ let listRoles = [
     roleName : 'Loup Garou',
     carte : '/assets/cartes/loupGarou.jpg',
     visible : true,
+    max     : 0.5
 },
 {
     roleName : 'Ancien',
     carte : '/assets/cartes/ancien.JPG',
     visible : true,
+    max     : 1
 },
 {
     roleName : 'Bouc Emissaire',
     carte : '/assets/cartes/boucEmissaire.jpg',
     visible : true,
+    max     : 1
 },
 {
     roleName : 'Chasseur',
     carte : '/assets/cartes/chasseur.jpg',
     visible : true,
+    max     : 1
 },
 {
     roleName : 'Cupidon',
     carte : '/assets/cartes/cupidon.jpg',
     visible : true,
+    max     : 1
 },
 {
     roleName : 'Idiot',
     carte : '/assets/cartes/idiot.jpg',
     visible : true,
+    max     : 1
 },
 {
     roleName : 'Joueur de Flûte',
     carte : '/assets/cartes/joueurFlute.jpg',
     visible : true,
+    max     : 1
 },
 {
     roleName : 'Maire',
     carte : '/assets/cartes/maire.jpg',
     visible : true,
+    max     : 1
 },
 {
     roleName : 'Petit Fille',
     carte : '/assets/cartes/petiteFille.jpg',
     visible : true,
+    max     : 1
 },
 {
     roleName : 'Salvateur',
     carte : '/assets/cartes/salvateur.jpg',
     visible : true,
+    max     : 1
 },
 {
     roleName : 'Sorcière',
     carte : '/assets/cartes/sorciere.jpg',
     visible : true,
+    max     : 1
 },
 {
     roleName : 'Villageois',
     carte : '/assets/cartes/villageois.jpg',
     visible : true,
+    max     : null
 },
 {
     roleName : 'Voleur',
     carte : '/assets/cartes/voleur.jpg',
     visible : true,
+    max     : 1
 },
 {
     roleName : 'Voyante',
     carte : '/assets/cartes/voyante.jpg',
     visible : true,
+    max     : 1
 },
 ];
 
@@ -195,7 +209,7 @@ io.sockets.on('connection', function (socket) {
 function setRandomRole(channel){
         if(typeof channel.listPlayer == 'undefined')
         {
-            channel.listPlayers.length=0;
+            channel.listPlayers = {};
         }
         channel.nbrPlayer = channel.listPlayer.length + 1;
 
