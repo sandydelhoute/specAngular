@@ -45,9 +45,9 @@ export class ChannelService {
 		});
 		return observerStatusCreateServer;
 	}
-	callJoinChannel(channelName : string )
+	callJoinChannel(channelName : string,userName)
 	{
-		this.socket.emit('joinChannel',channelName);
+		this.socket.emit('joinChannel',channelName,userName);
 	}
 	accessJoinChannel(){
 		let observerAccesJoinChannel= new Observable((observer)=>{

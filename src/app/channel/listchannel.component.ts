@@ -17,8 +17,10 @@ export class ListChannel implements OnInit {
 	}
 
 	joinChannel(channelName:string){
-		this.channelService.callJoinChannel(channelName);
+		var userName=sessionStorage.getItem('ourself')
+		this.channelService.callJoinChannel(channelName,userName);
 	}
+	
 	ngOnInit(){
 		this.channelService.accessJoinChannel().subscribe((status:any)=>{
 			console.log(status);

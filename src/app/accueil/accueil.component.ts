@@ -93,9 +93,7 @@ export class Accueil implements OnInit {
 		}
 	}
 
-	joinChannel(channelName:string){
-		this.channelService.callJoinChannel(channelName);
-	}
+
 	
 
 }

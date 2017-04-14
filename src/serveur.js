@@ -118,16 +118,6 @@ io.sockets.on('connection', function (socket) {
 
         })
         if(!existChannelName){
-
-            /*listUsers.map(function(user){
-                console.log("bloucle user");
-                console.log(user);
-                if(user.id == socket.id )
-                {
-                    listPlayer.push(user);
-            }
-
-            });*/
             var user={id:socket.id,name:userName,isMaster:true,isReady:false};
             socket.join(channelName);
             channel={name:channelName,nbrPlayer:listPlayer.length+1,limitPlayer:15,minPlayer:6,listPlayer:listPlayer,id:listChannel.length,partie:{status:false}};
@@ -148,7 +138,7 @@ io.sockets.on('connection', function (socket) {
         io.emit('listChannel',listChannel);
     });
 
-    socket.on('joinChannel',(channelName)=>{
+    socket.on('joinChannel',(channelName,userName)=>{
         var currentChannel;
         listChannel.map(function(channel){
             if(channelName == channel.name)
@@ -168,7 +158,7 @@ io.sockets.on('connection', function (socket) {
         }
         else
         {
-            var user={id:socket.id,isMaster:false,isReady:false};
+            var user={id:socket.id,name:userName,isMaster:false,isReady:false};
             user.role=setRandomRole(currentChannel);
             currentChannel.listPlayer.push(user);
             socket.join(channelName);
