@@ -32,9 +32,9 @@ export class ChannelService {
 	callListChannel(){
 		this.socket.emit('callListChannel');
 	}
-	createChannel(nameChannel:string){
+	createChannel(nameChannel:string,userName){
 		if(nameChannel != ''){
-			this.socket.emit('createChannel',nameChannel);
+			this.socket.emit('createChannel',nameChannel,userName);
 		} else return null;
 	}
 	statusCreateChannel(){

@@ -86,7 +86,8 @@ export class Accueil implements OnInit {
 	createChannel(nameChannel : string, errorMessage:HTMLElement ){
 		if(nameChannel != ''){
 			errorMessage.classList.add('hidden');
-			this.channelService.createChannel(nameChannel);
+			var userName=sessionStorage.getItem('ourself');
+			this.channelService.createChannel(nameChannel,userName);
 		} else {
 			errorMessage.classList.remove('hidden');
 		}

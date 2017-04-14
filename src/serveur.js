@@ -106,7 +106,7 @@ io.sockets.on('connection', function (socket) {
         }
     });
 
-    socket.on('createChannel',(channelName)=>{
+    socket.on('createChannel',(channelName,userName)=>{
         var existChannelName = false;
         var listPlayer=[];
 
@@ -128,7 +128,7 @@ io.sockets.on('connection', function (socket) {
             }
 
             });*/
-            var user={id:socket.id,isMaster:true,isReady:false};
+            var user={id:socket.id,name:userName,isMaster:true,isReady:false};
             socket.join(channelName);
             channel={name:channelName,nbrPlayer:listPlayer.length+1,limitPlayer:15,minPlayer:6,listPlayer:listPlayer,id:listChannel.length,partie:{status:false}};
             user.role=setRandomRole(channel);
