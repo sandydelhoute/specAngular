@@ -1,35 +1,42 @@
 import { Component,Input,OnInit} from '@angular/core';
 import { Router,ActivatedRoute, Params, Data } from '@angular/router';
 import { PartieService } from '../partie.service';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
-  	selector: 'waitPlayer',
-  	templateUrl: './waitplayer.html',
+	selector: 'waitPlayer',
+	templateUrl: './waitplayer.html',
 	providers:[PartieService]
 })
 
 export class WaitPlayer implements OnInit {
 
-private ourself={isMaster:true};
-constructor(private partieService : PartieService,private route: ActivatedRoute,
-    private router: Router)
+	private channel;
+	private listPlayers;
+	constructor(private partieService : PartieService,private route: ActivatedRoute,
+		private router: Router)
 	{
+
 	}
 
-  ngOnInit() {
+	ngOnInit() {
+		this.route.params.subscribe(params => {
+		this.partieService.getChannel(params['channel']);
 
-    this.route.snapshot.data['type'];
-    this.partieService.getListUser(this.route.snapshot.data['name']
-)
+		});
 
-  }
+		this.partieService.setChannel(this.channel.name).subscribe((channel)=>{
+			this.channel=channel;
+		console.log(channel);
+			this.listPlayers=this.channel.listPlayer;
+		});
+	}
 
 
 
-  private listPlayers=[{name:'sandy',isReady:false,},{name:'lolo',isReady:false,}];
 
 
-  	setMaster(){
+	setMaster(){
 		if(this.listPlayers.length == 0)
 			return true;
 		else return false;
@@ -65,5 +72,5 @@ constructor(private partieService : PartieService,private route: ActivatedRoute,
 	launchParty(){}
 
 
-		
+
 }

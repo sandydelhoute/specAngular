@@ -188,7 +188,7 @@ io.sockets.on('connection', function (socket) {
                 currentChannel=channel;
             }
         });
-    socket.to(channelName).emit('setChannel',currentChannel);
+    io.to(channelName).emit('setChannel',currentChannel);
 
     });
 
