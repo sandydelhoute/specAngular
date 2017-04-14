@@ -7,10 +7,10 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static(__dirname));
 http.listen(PORT, () => console.log('Le serveur a demaré'));
 
-const nbLoups = 0;
-const listChannel=[];
-const listUsers = [];
-const listRoles = [
+let nbLoups = 0;
+let listChannel=[];
+let listUsers = [];
+let listRoles = [
 {
     roleName : 'Ancien',
     carte : '/assets/cartes/ancien.JPG',
@@ -91,20 +91,17 @@ io.sockets.on('connection', function (socket) {
         listUsers.map(function(player){
             if(playerName == player.name)
             {
-                console.log('userexist');
                 usersNameUsed=true;
             }
 
         })
         if(!usersNameUsed){
-            console.log('acces');
             listUsers.push({'name':playerName,'id':socket.id});
             socket.emit("accesChannel",{'name':playerName,'id':socket.id});
 
         }
         else
         {
-            console.log('error');
             socket.emit('noAccesChannel');
         }
     });
@@ -133,11 +130,14 @@ io.sockets.on('connection', function (socket) {
             });*/
             var user={id:socket.id,isMaster:true,isReady:false};
             socket.join(channelName);
-            channel={name:channelName,nbrPlayer:listPlayer.length,limitPlayer:15,minPlayer:6,listPlayer:listPlayer,id:listChannel.length,partie:{status:false}};
+            channel={name:channelName,nbrPlayer:listPlayer.length+1,limitPlayer:15,minPlayer:6,listPlayer:listPlayer,id:listChannel.length,partie:{status:false}};
             user.role=setRandomRole(channel);
             listPlayer.push(user);
             listChannel.push(channel);
+             console.log("create channel ");
+            console.log(channel);
             socket.emit('statusCreateChannel',{create:true,name:channelName});
+            socket.broadcast.emit('listChannel',listChannel);
         }
         else
         {
@@ -157,6 +157,8 @@ io.sockets.on('connection', function (socket) {
                 currentChannel=channel;
             }
         })
+        console.log("currentChannel");
+        console.log(currentChannel);
         if(currentChannel.nbrPlayer >= currentChannel.limitPlayer)
         {
             socket.emit('accessJoinChannel',{access:false,msg:'Le channel est complet'});
@@ -177,14 +179,32 @@ io.sockets.on('connection', function (socket) {
 
 
     });
+
+    socket.on('getChannel',function(channelName){
+        var currentChannel;
+        listChannel.map(function(channel){
+        
+            if(channel.name == channelName){
+                currentChannel=channel;
+            }
+        });
+    socket.to(channelName).emit('setChannel',currentChannel);
+
+    });
+
+
+
+
     socket.on('addmessage',function(message){
-    	console.log(message);
         io.emit('newmessage',message);
     });
 
 });
 function setRandomRole(channel){
-
+        if(typeof channel.listPlayer == 'undefined')
+        {
+            channel.listPlayer=0;
+        }
         channel.nbrPlayer = channel.listPlayer.length + 1;
 
         var newRole = listRoles[Math.floor(Math.random()*listRoles.length)];
@@ -199,24 +219,23 @@ function setRandomRole(channel){
             var maxLoups = Math.round(this.nbPlayers * channel.listRoles[0].max); //Recup du nombre maxi de loups  
 
             if(nbLoups > maxLoups){
-                newRole = this.setRandomRole(channel);
+                newRole = this.setRandomRole(currentChannel);
             }
 
         } else if(newRole.roleName != 'Villageois'){ //Maxi 1 joueur des autres roles
 
             var isAvailable = true;
 
-            console.log(channel.listPlayer);
             channel.listPlayer.map(function(player){
                 if(player.role == newRole.roleName)
                     isAvailable = false;
             });
 
             if(isAvailable != true) {
-                newRole =  this.setRandomRole(channel);
+                newRole =  this.setRandomRole(currentChannel);
             }
-        } else if((channel.listPlayers.length >= this.minPlayer) && (this.nbLoups == 0) && (newRole.roleName != 'Loup Garou')){
-            newRole = this.setRandomRole(channel); //Pour avoir au moins 1 loup si + de minPlayers joueurs
+        } else if((channel.listPlayers.length >= channels.minPlayer) && (this.nbLoups == 0) && (newRole.roleName != 'Loup Garou')){
+            newRole = this.setRandomRole(currentChannel); //Pour avoir au moins 1 loup si + de minPlayers joueurs
         }
 
         return newRole;
