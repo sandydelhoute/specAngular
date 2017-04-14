@@ -15,10 +15,6 @@ export class Channel implements OnInit {
 	constructor(private channelService : ChannelService,private router :Router)
 	{
 	}
-
-	createChannel(nameChannel : string ){
-	this.channelService.createChannel(nameChannel);
-		}
 	
 	ngOnInit() {
 
@@ -26,6 +22,7 @@ export class Channel implements OnInit {
 		this.channelService.listChannel().subscribe((listChannel)=>{
 			this.listChannel=listChannel;
 		});
+		
 
 	}
 }

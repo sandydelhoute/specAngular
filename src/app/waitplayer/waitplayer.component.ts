@@ -25,10 +25,13 @@ export class WaitPlayer implements OnInit {
 
 		});
 
-		this.partieService.setChannel(this.channel.name).subscribe((channel)=>{
+		this.partieService.setChannel().subscribe((channel)=>{
 			this.channel=channel;
 		console.log(channel);
 			this.listPlayers=this.channel.listPlayer;
+		});
+		this.partieService.getPlayer().subscribe((listPlayer)=>{
+			this.listPlayers=listPlayer;
 		});
 	}
 
@@ -36,11 +39,7 @@ export class WaitPlayer implements OnInit {
 
 
 
-	setMaster(){
-		if(this.listPlayers.length == 0)
-			return true;
-		else return false;
-	}
+
 
 
 	setReady(player, buttonReady:HTMLElement){

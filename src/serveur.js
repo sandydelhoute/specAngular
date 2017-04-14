@@ -135,7 +135,6 @@ io.sockets.on('connection', function (socket) {
             listPlayer.push(user);
             listChannel.push(channel);
              console.log("create channel ");
-            console.log(channel);
             socket.emit('statusCreateChannel',{create:true,name:channelName});
             socket.broadcast.emit('listChannel',listChannel);
         }
@@ -181,6 +180,7 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('getChannel',function(channelName){
+        console.log("demande d'info channel")
         var currentChannel;
         listChannel.map(function(channel){
         
@@ -188,7 +188,9 @@ io.sockets.on('connection', function (socket) {
                 currentChannel=channel;
             }
         });
-    io.to(channelName).emit('setChannel',currentChannel);
+    socket.emit('setChannel',currentChannel);
+    socket.join(channelName);
+    io.to(channelName).emit('getPlayer',channel.listPlayer);
 
     });
 
@@ -203,7 +205,7 @@ io.sockets.on('connection', function (socket) {
 function setRandomRole(channel){
         if(typeof channel.listPlayer == 'undefined')
         {
-            channel.listPlayer=0;
+            channel.listPlayers.length=0;
         }
         channel.nbrPlayer = channel.listPlayer.length + 1;
 

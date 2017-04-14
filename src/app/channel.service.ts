@@ -17,10 +17,12 @@ export class ChannelService {
 		return observerAccesChannel;
 	}
 
+
+
+
 	listChannel(){
 		let observerListChannel = new Observable((observer) => {
 			this.socket.on('listChannel',(listChannel) =>{
-				console.log("list channel");
 				observer.next(listChannel);
 			});
 		});

@@ -8,19 +8,27 @@ export class PartieService {
 
   private socket:any=io('http://localhost:3000');	
   constructor() { }
-  getListUser(channelName){
-  	console.log(channelName);
-  	this.socket.emit('getListUser',channelName);
+  getChannel(channelName){
+  	this.socket.emit('getChannel',channelName);
   }
-  setListUser(){
-  		let ObservateSetMaster = new Observable((observer)=>{
-  			this.socket.on('setListUser',(listUser)=>{
-  				observer.next(listUser);
+  setChannel(){
+  		let ObservateSetChannel = new Observable((observer)=>{
+  			this.socket.on('setChannel',(channel)=>{
+  				console.log("je suis dans le setChannel");
+  				observer.next(channel);
   			});
 
   		});
-  	return ObservateSetMaster;
+  	return ObservateSetChannel;
   }
+    getPlayer(){
+      let ObservateGetPlayer = new Observable((observer)=>{
+        this.socket.on('getPlayer',(listPlayer)=>{
+          observer.next(listPlayer);
+        });
 
+      });
+    return ObservateGetPlayer;
+  }
 
 }
