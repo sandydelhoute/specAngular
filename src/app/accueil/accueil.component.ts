@@ -25,6 +25,7 @@ export class Accueil implements OnInit {
 	ngOnInit() {
 		this.channelService.accesChannel().subscribe((user:any)=>{
 			this.ourself.name=user.name;
+
 		});
 
 		this.channelService.callListChannel();
@@ -68,6 +69,8 @@ export class Accueil implements OnInit {
 			errorMessage.classList.add('hidden');
 			
 			this.ourself.name = playername;
+			sessionStorage.setItem('ourself', playername);
+
 			this.loginService.addPlayer(playername);
 
 			this.buttonState();
