@@ -12,6 +12,11 @@ let listChannel=[];
 let listUsers = [];
 let listRoles = [
 {
+    roleName : 'Loup Garou',
+    carte : '/assets/cartes/loupGarou.jpg',
+    visible : true,
+},
+{
     roleName : 'Ancien',
     carte : '/assets/cartes/ancien.JPG',
     visible : true,
@@ -39,11 +44,6 @@ let listRoles = [
 {
     roleName : 'Joueur de Flûte',
     carte : '/assets/cartes/joueurFlute.jpg',
-    visible : true,
-},
-{
-    roleName : 'Loup Garou',
-    carte : '/assets/cartes/loupGarou.jpg',
     visible : true,
 },
 {
@@ -216,7 +216,7 @@ function setRandomRole(channel){
         if(newRole.roleName == 'Loup Garou'){
             nbLoups += 1;
 
-            var maxLoups = Math.round(this.nbPlayers * channel.listRoles[0].max); //Recup du nombre maxi de loups  
+            var maxLoups = Math.round(this.nbPlayers * listRoles[0].max); //Recup du nombre maxi de loups  
 
             if(nbLoups > maxLoups){
                 newRole = this.setRandomRole(currentChannel);
