@@ -17,9 +17,6 @@ export class ChannelService {
 		return observerAccesChannel;
 	}
 
-
-
-
 	listChannel(){
 		let observerListChannel = new Observable((observer) => {
 			this.socket.on('listChannel',(listChannel) =>{
@@ -45,20 +42,9 @@ export class ChannelService {
 		});
 		return observerStatusCreateServer;
 	}
-	callJoinChannel(channelName : string,userName)
+	JoinChannel(channelName : string,userName)
 	{
 		this.socket.emit('joinChannel',channelName,userName);
 	}
-	accessJoinChannel(){
-		let observerAccesJoinChannel= new Observable((observer)=>{
-			this.socket.on('accessJoinChannel',(status:any)=>{
-				console.log("je suis dans le join channel");
-				observer.next(status);
-			})
-
-		});
-		return observerAccesJoinChannel;
-	}
-	
 
 }

@@ -12,236 +12,253 @@ let listChannel=[];
 let listUsers = [];
 let listRoles = [
 {
-    roleName : 'Loup Garou',
-    carte : '/assets/cartes/loupGarou.jpg',
-    visible : true,
-    max     : 0.5
+	roleName : 'Loup Garou',
+	carte : '/assets/cartes/loupGarou.jpg',
+	visible : true,
+	max     : 0.5
 },
 {
-    roleName : 'Ancien',
-    carte : '/assets/cartes/ancien.JPG',
-    visible : true,
-    max     : 1
+	roleName : 'Ancien',
+	carte : '/assets/cartes/ancien.JPG',
+	visible : true,
+	max     : 1
 },
 {
-    roleName : 'Bouc Emissaire',
-    carte : '/assets/cartes/boucEmissaire.jpg',
-    visible : true,
-    max     : 1
+	roleName : 'Bouc Emissaire',
+	carte : '/assets/cartes/boucEmissaire.jpg',
+	visible : true,
+	max     : 1
 },
 {
-    roleName : 'Chasseur',
-    carte : '/assets/cartes/chasseur.jpg',
-    visible : true,
-    max     : 1
+	roleName : 'Chasseur',
+	carte : '/assets/cartes/chasseur.jpg',
+	visible : true,
+	max     : 1
 },
 {
-    roleName : 'Cupidon',
-    carte : '/assets/cartes/cupidon.jpg',
-    visible : true,
-    max     : 1
+	roleName : 'Cupidon',
+	carte : '/assets/cartes/cupidon.jpg',
+	visible : true,
+	max     : 1
 },
 {
-    roleName : 'Idiot',
-    carte : '/assets/cartes/idiot.jpg',
-    visible : true,
-    max     : 1
+	roleName : 'Idiot',
+	carte : '/assets/cartes/idiot.jpg',
+	visible : true,
+	max     : 1
 },
 {
-    roleName : 'Joueur de Flûte',
-    carte : '/assets/cartes/joueurFlute.jpg',
-    visible : true,
-    max     : 1
+	roleName : 'Joueur de Flûte',
+	carte : '/assets/cartes/joueurFlute.jpg',
+	visible : true,
+	max     : 1
 },
 {
-    roleName : 'Maire',
-    carte : '/assets/cartes/maire.jpg',
-    visible : true,
-    max     : 1
+	roleName : 'Maire',
+	carte : '/assets/cartes/maire.jpg',
+	visible : true,
+	max     : 1
 },
 {
-    roleName : 'Petit Fille',
-    carte : '/assets/cartes/petiteFille.jpg',
-    visible : true,
-    max     : 1
+	roleName : 'Petit Fille',
+	carte : '/assets/cartes/petiteFille.jpg',
+	visible : true,
+	max     : 1
 },
 {
-    roleName : 'Salvateur',
-    carte : '/assets/cartes/salvateur.jpg',
-    visible : true,
-    max     : 1
+	roleName : 'Salvateur',
+	carte : '/assets/cartes/salvateur.jpg',
+	visible : true,
+	max     : 1
 },
 {
-    roleName : 'Sorcière',
-    carte : '/assets/cartes/sorciere.jpg',
-    visible : true,
-    max     : 1
+	roleName : 'Sorcière',
+	carte : '/assets/cartes/sorciere.jpg',
+	visible : true,
+	max     : 1
 },
 {
-    roleName : 'Villageois',
-    carte : '/assets/cartes/villageois.jpg',
-    visible : true,
-    max     : null
+	roleName : 'Villageois',
+	carte : '/assets/cartes/villageois.jpg',
+	visible : true,
+	max     : null
 },
 {
-    roleName : 'Voleur',
-    carte : '/assets/cartes/voleur.jpg',
-    visible : true,
-    max     : 1
+	roleName : 'Voleur',
+	carte : '/assets/cartes/voleur.jpg',
+	visible : true,
+	max     : 1
 },
 {
-    roleName : 'Voyante',
-    carte : '/assets/cartes/voyante.jpg',
-    visible : true,
-    max     : 1
+	roleName : 'Voyante',
+	carte : '/assets/cartes/voyante.jpg',
+	visible : true,
+	max     : 1
 },
 ];
 
 
 
 io.sockets.on('connection', function (socket) {
-    socket.on('addPlayer',(playerName)=>{
-        var usersNameUsed = false;
-        listUsers.map(function(player){
-            if(playerName == player.name)
-            {
-                usersNameUsed=true;
-            }
 
-        })
-        if(!usersNameUsed){
-            listUsers.push({'name':playerName,'id':socket.id});
-            socket.emit("accesChannel",{'name':playerName,'id':socket.id});
+// AJOUT USERS 
+socket.on('addPlayer',(playerName)=>{
+	var usersNameUsed = false;
+	listUsers.map(function(player){
+		if(playerName == player.name)
+		{
+			usersNameUsed=true;
+		}
 
-        }
-        else
-        {
-            socket.emit('noAccesChannel');
-        }
-    });
+	})
+	if(!usersNameUsed){
+		listUsers.push({'name':playerName,'id':socket.id});
+		socket.emit("accesChannel",{'name':playerName,'id':socket.id});
 
-    socket.on('createChannel',(channelName,userName)=>{
-        var existChannelName = false;
-        var listPlayer=[];
-
-        listChannel.map(function(channel){
-            if(channelName == channel.name)
-            {
-                existChannelName = true;
-            }
-
-        })
-        if(!existChannelName){
-            var user={id:socket.id,name:userName,isMaster:true,isReady:false};
-            socket.join(channelName);
-            channel={name:channelName,nbrPlayer:listPlayer.length+1,limitPlayer:15,minPlayer:6,listPlayer:listPlayer,id:listChannel.length,partie:{status:false}};
-            user.role=setRandomRole(channel);
-            listPlayer.push(user);
-            listChannel.push(channel);
-             console.log("create channel ");
-            socket.emit('statusCreateChannel',{create:true,name:channelName});
-            socket.broadcast.emit('listChannel',listChannel);
-        }
-        else
-        {
-            socket.emit('statusCreateChannel',{create:false});
-        }
-    });
-
-    socket.on('callListChannel',()=>{
-        io.emit('listChannel',listChannel);
-    });
-
-    socket.on('joinChannel',(channelName,userName)=>{
-        var currentChannel;
-        listChannel.map(function(channel){
-            if(channelName == channel.name)
-            {
-                currentChannel=channel;
-            }
-        })
-        console.log("currentChannel");
-        console.log(currentChannel);
-        if(currentChannel.nbrPlayer >= currentChannel.limitPlayer)
-        {
-            socket.emit('accessJoinChannel',{access:false,msg:'Le channel est complet'});
-        }
-        else if(currentChannel.partie.status)
-        {
-            socket.emit('accessJoinChannel',{access:false,msg:'La partie est déjâ en cours'});
-        }
-        else
-        {
-            var user={id:socket.id,name:userName,isMaster:false,isReady:false};
-            user.role=setRandomRole(currentChannel);
-            currentChannel.listPlayer.push(user);
-            socket.join(channelName);
-            socket.emit('accessJoinChannel',{access:true, name:channelName});
-        }
-
-
-
-    });
-
-    socket.on('getChannel',function(channelName){
-        console.log("demande d'info channel")
-        var currentChannel;
-        listChannel.map(function(channel){
-        
-            if(channel.name == channelName){
-                currentChannel=channel;
-            }
-        });
-    socket.emit('setChannel',currentChannel);
-    socket.join(channelName);
-    io.to(channelName).emit('getPlayer',channel.listPlayer);
-
-    });
+	}
+	else
+	{
+		socket.emit('noAccesChannel');
+	}
+});
 
 
 
 
-    socket.on('addmessage',function(message){
-        io.emit('newmessage',message);
-    });
+// CREATION D UN CHANNEL
+socket.on('createChannel',(channelName,userName)=>{
+	var existChannelName = false;
+	var listPlayer=[];
+
+	listChannel.map(function(channel){
+		if(channelName == channel.name)
+		{
+			existChannelName = true;
+		}
+
+	})
+	if(!existChannelName){
+		var player={id:socket.id,name:userName,isMaster:true,isReady:false};
+		channel={name:channelName,limitPlayer:15,minPlayer:6,id:listChannel.length,partie:{status:false}};
+		player.role=setRandomRole(channel.minPlayer,listPlayer);
+		listPlayer.push(player);
+		channel.nbrPlayer=listPlayer.length;
+		channel.listPlayer=listPlayer;
+		listChannel.push(channel);
+		socket.join(channelName);
+		socket.emit('statusCreateChannel',{create:true,name:channelName});
+		socket.broadcast.emit('listChannel',listChannel);
+	}
+	else
+	{
+		socket.emit('statusCreateChannel',{create:false});
+	}
+});
+
+socket.on('callListChannel',()=>{
+	io.emit('listChannel',listChannel);
+});
+
+
+// JOIN CHANNEL
+socket.on('joinChannel',(channelName,userName)=>{
+	listChannel.map(function(channel){
+		if(channelName == channel.name)
+		{
+
+			if(channel.nbrPlayer >= channel.limitPlayer)
+			{
+				socket.emit('accessJoinChannel',{access:false,msg:'Le channel est complet'});
+			}
+			else if(channel.partie.status)
+			{
+				socket.emit('accessJoinChannel',{access:false,msg:'La partie est déjâ en cours'});
+			}
+			else
+			{
+			var user={id:socket.id,name:userName,isMaster:false,isReady:false};
+			user.role=setRandomRole(channel.minPlayer,channel.listPlayer);
+			channel.listPlayer.push(user);
+			channel.nbrPlayer=channel.listPlayer.length;
+			socket.broadcast.emit('listChannel',listChannel);
+			socket.emit('accessJoinChannel',{access:true, name:channelName});
+			}
+		}
+	});
+});
+
+
+
+//INFORMATION CHANNEL AFTER JOIN
+socket.on('getChannel',function(channelName){
+	console.log(io.sockets.adapter.rooms);
+
+	listChannel.map(function(channel){
+
+		if(channel.name == channelName){
+			console.log("je suis dans le GET CHANNEL");
+			socket.join(channel.name);
+			socket.emit('setChannel',channel);
+			socket.broadcast.to(channel.name).emit('setChannel',channel);
+
+		}
+	});
+
 
 });
-function setRandomRole(channel){
-        if(typeof channel.listPlayer == 'undefined')
-        {
-            channel.listPlayers = {};
-        }
-        channel.nbrPlayer = channel.listPlayer.length + 1;
 
-        var newRole = listRoles[Math.floor(Math.random()*listRoles.length)];
+// TCHAT
+socket.on('addmessage',function(message){
+	io.emit('newmessage',message);
+});
+
+
+//disconnect
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+
+});
+
+
+
+// GESTION DES ROLES DES PLAYERS
+function setRandomRole(minPlayer,listPlayer){
+	var currentListPlayer=[];
+	if(typeof listPlayer != "undefined" )
+	{
+		var currentListPlayer=listPlayer;
+	}
+
+	var newRole = listRoles[Math.floor(Math.random()*listRoles.length)];
 
         if(newRole.visible != true){ //Si on tombe sur un role non utilisé
-            newRole =  this.setRandomRole(channel);
+        	newRole =  this.setRandomRole(minPlayer,listPlayer);
         }
 
         if(newRole.roleName == 'Loup Garou'){
-            nbLoups += 1;
+        	nbLoups += 1;
 
             var maxLoups = Math.round(this.nbPlayers * listRoles[0].max); //Recup du nombre maxi de loups  
 
             if(nbLoups > maxLoups){
-                newRole = this.setRandomRole(currentChannel);
+            	newRole = this.setRandomRole(minPlayer,listPlayer);
             }
 
         } else if(newRole.roleName != 'Villageois'){ //Maxi 1 joueur des autres roles
 
-            var isAvailable = true;
+        	var isAvailable = true;
 
-            channel.listPlayer.map(function(player){
-                if(player.role == newRole.roleName)
-                    isAvailable = false;
-            });
+        	listPlayer.map(function(player){
+        		if(player.role == newRole.roleName)
+        			isAvailable = false;
+        	});
 
-            if(isAvailable != true) {
-                newRole =  this.setRandomRole(currentChannel);
-            }
-        } else if((channel.listPlayers.length >= channels.minPlayer) && (this.nbLoups == 0) && (newRole.roleName != 'Loup Garou')){
-            newRole = this.setRandomRole(currentChannel); //Pour avoir au moins 1 loup si + de minPlayers joueurs
+        	if(isAvailable != true) {
+        		newRole =  this.setRandomRole(minPlayer,listPlayer);
+        	}
+        } else if((currentListPlayer.length >= minPlayer) && (this.nbLoups == 0) && (newRole.roleName != 'Loup Garou')){
+            newRole = this.setRandomRole(minPlayer,listPlayer); //Pour avoir au moins 1 loup si + de minPlayers joueurs
         }
 
         return newRole;

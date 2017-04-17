@@ -23,10 +23,10 @@ export class Accueil implements OnInit {
 	}
 
 	ngOnInit() {
-		this.channelService.accesChannel().subscribe((user:any)=>{
-			this.ourself.name=user.name;
+		// this.channelService.accesChannel().subscribe((user:any)=>{
+		// 	this.ourself.name=user.name;
 
-		});
+		// });
 
 		this.channelService.callListChannel();
 		this.channelService.listChannel().subscribe((listChannel)=>{
@@ -35,6 +35,8 @@ export class Accueil implements OnInit {
 		this.channelService.statusCreateChannel().subscribe((status:any)=>{
 			if(status.create)
 			{
+
+ 
 				this.router.navigate(['waitplayer',status.name]);
 			}
 			else

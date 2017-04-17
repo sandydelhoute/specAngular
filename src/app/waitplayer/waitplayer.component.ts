@@ -21,17 +21,14 @@ export class WaitPlayer implements OnInit {
 
 	ngOnInit() {
 		this.route.params.subscribe(params => {
-		this.partieService.getChannel(params['channel']);
-
+			this.partieService.getChannel(params['channel']);
 		});
 
-		this.partieService.setChannel().subscribe((channel)=>{
+		this.partieService.setChannel().subscribe((channel:any)=>{
+			console.log("je suis dans le setChannel");
+			console.log(channel);
 			this.channel=channel;
-		console.log(channel);
-			this.listPlayers=this.channel.listPlayer;
-		});
-		this.partieService.getPlayer().subscribe((listPlayer)=>{
-			this.listPlayers=listPlayer;
+			this.listPlayers=channel.listPlayer;
 		});
 	}
 

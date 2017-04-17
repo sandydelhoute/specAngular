@@ -14,21 +14,12 @@ export class PartieService {
   setChannel(){
   		let ObservateSetChannel = new Observable((observer)=>{
   			this.socket.on('setChannel',(channel)=>{
-  				console.log("je suis dans le setChannel");
   				observer.next(channel);
   			});
 
   		});
   	return ObservateSetChannel;
   }
-    getPlayer(){
-      let ObservateGetPlayer = new Observable((observer)=>{
-        this.socket.on('getPlayer',(listPlayer)=>{
-          observer.next(listPlayer);
-        });
-
-      });
-    return ObservateGetPlayer;
-  }
+   
 
 }
