@@ -7,7 +7,7 @@ import { WaitPlayer } from './waitplayer/waitplayer.component';
 export const routes: Routes = [
   { path: '', component: Accueil },
   { path: 'channel', component: Channel },
-  { path: 'partie', component: Partie },
+  { path: 'game/:channel', component: Partie },
   { path: 'waitplayer/:channel', component: WaitPlayer, }
 ];
 

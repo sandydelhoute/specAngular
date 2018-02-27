@@ -1,12 +1,13 @@
 const express = require('express');
 const app = express();
-const http = require('http').Server(app);
+const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const PORT = process.env.PORT || 3000;
 
-app.use(express.static(__dirname));
-http.listen(PORT, () => console.log('Le serveur a demaré'));
 
+app.use(express.static(__dirname));
+http.listen(PORT, () => console.log(`Le serveur a demaré,listing in ${PORT}`));
+//http.listen(80, () => console.log(`Le serveur a demaré,listing in ${PORT},sandy`));
 let nbLoups = 0;
 let listChannel=[];
 let listUsers = [];
@@ -127,6 +128,7 @@ socket.on('addPlayer',(playerName)=>{
 
 // CREATION D UN CHANNEL
 socket.on('createChannel',(channelName,userName)=>{
+	console.log("je suis dnas le create channel");
 	var existChannelName = false;
 	var listPlayer=[];
 
@@ -139,7 +141,19 @@ socket.on('createChannel',(channelName,userName)=>{
 	})
 	if(!existChannelName){
 		var player={id:socket.id,name:userName,isMaster:true,isReady:false};
-		channel={name:channelName,limitPlayer:15,minPlayer:6,id:listChannel.length,partie:{status:false}};
+		channel=
+		{	
+			name:channelName,
+			limitPlayer:15,
+			minPlayer:6,
+			id:listChannel.length,
+			partie:{status:false},
+			message:{
+				all:[{}],
+				loup:[{}],
+				vilagois:[{}]
+			}
+		};
 		player.role=setRandomRole(channel.minPlayer,listPlayer);
 		listPlayer.push(player);
 		channel.nbrPlayer=listPlayer.length;
@@ -176,12 +190,12 @@ socket.on('joinChannel',(channelName,userName)=>{
 			}
 			else
 			{
-			var user={id:socket.id,name:userName,isMaster:false,isReady:false};
-			user.role=setRandomRole(channel.minPlayer,channel.listPlayer);
-			channel.listPlayer.push(user);
-			channel.nbrPlayer=channel.listPlayer.length;
-			socket.broadcast.emit('listChannel',listChannel);
-			socket.emit('accessJoinChannel',{access:true, name:channelName});
+				var user={id:socket.id,name:userName,isMaster:false,isReady:false};
+				user.role=setRandomRole(channel.minPlayer,channel.listPlayer);
+				channel.listPlayer.push(user);
+				channel.nbrPlayer=channel.listPlayer.length;
+				socket.broadcast.emit('listChannel',listChannel);
+				socket.emit('accessJoinChannel',{access:true, name:channelName,user:user});
 			}
 		}
 	});
@@ -191,32 +205,76 @@ socket.on('joinChannel',(channelName,userName)=>{
 
 //INFORMATION CHANNEL AFTER JOIN
 socket.on('getChannel',function(channelName){
-	console.log(io.sockets.adapter.rooms);
-
 	listChannel.map(function(channel){
-
 		if(channel.name == channelName){
-			console.log("je suis dans le GET CHANNEL");
 			socket.join(channel.name);
 			socket.emit('setChannel',channel);
 			socket.broadcast.to(channel.name).emit('setChannel',channel);
-
 		}
 	});
 
 
 });
+// IS READY IN CHANNEL
+socket.on('setReady',function(userInput,channelInput){
+	console.log(" je suis dans le setReady");
+	listChannel.map(function(channel){
+		if(channel.name == channelInput.name)
+		{
+			channel.listPlayer.map(function(user)
+			{
 
-// TCHAT
-socket.on('addmessage',function(message){
-	io.emit('newmessage',message);
+				if(user.name == userInput.name)
+
+				{
+					console.log(" je suis le bon user")
+					user.isReady=true;
+				}
+			});
+
+		}
+	});
+	socket.emit('updateChannel',channel);
+	socket.to(channel.name).emit('updateChannel',channel);
 });
 
 
+socket.on('callLaunchGame',function(channelName){
+	console.log("je suis dans le callLaunchGame");
+	/*listChannel.map(function(channel){
+		if(channelName == channel.name){
+			socket.broadcast.to(channel.name).emit('launchGame',{name:channel.name,status:true});
+		}
+	});*/
+});
+
+
+// TCHAT
+socket.on('addmessage',function(message,channelInput){
+
+	listChannel.map(function(channel){
+
+		if(channel.name == channelInput.name)
+		{
+			channel.message.all.push(message);
+			io.emit('newmessage',{message:message});
+			socket.to(channel.name).emit('newmessage',{message:message});
+		}
+
+	});
+})
+
 //disconnect
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
-  });
+socket.on('disconnect', function(data){
+
+	console.log("voila la data"+data);
+	/*listChannel.map(function(channel){
+		channel.players.map(function(player)
+		{	
+
+		});
+	});*/
+});
 
 });
 

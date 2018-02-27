@@ -10,8 +10,8 @@ export class ChannelService {
 	constructor() { }
 	accesChannel(){
 		let observerAccesChannel = new Observable((observer) => {
-			this.socket.on('accesChannel',(user) =>{
-				observer.next(user);
+			this.socket.on('accessJoinChannel',(status) =>{
+				observer.next(status);
 			});
 		});
 		return observerAccesChannel;
@@ -42,9 +42,34 @@ export class ChannelService {
 		});
 		return observerStatusCreateServer;
 	}
+
 	JoinChannel(channelName : string,userName)
 	{
 		this.socket.emit('joinChannel',channelName,userName);
 	}
+
+  getChannel(channelName){
+  	this.socket.emit('getChannel',channelName);
+  }
+
+
+  setChannel(){
+  		let ObservateSetChannel = new Observable((observer)=>{
+  			this.socket.on('setChannel',(channel)=>{
+  				observer.next(channel);
+  			});
+
+  		});
+  	return ObservateSetChannel;
+  }
+  updateChannel(){
+  	let ObservateUpdateChannel = new Observable((observer)=>{
+  			this.socket.on('updateChannel',(channel)=>{
+  				observer.next(channel);
+  			});
+
+  		});
+  	return ObservateUpdateChannel;
+  }
 
 }

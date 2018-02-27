@@ -1,11 +1,14 @@
-<div class="row message">
-	<div class="col-sm-3 text-left">
-		{{message.date | date:"dd/MM/yyyy H:m:s"}}
+<div class="message">
+<div class="row">
+	<div class="col-xs-12 col-sm-3 text-left">
+		date : {{message.date | date:"dd/MM/yyyy H:m:s"}}
 	</div>
-	<div class="col-sm-3 text-left">
-		{{message.player}}
+		<div class="col-xs-12 col-sm-9 text-left">
+		player : {{message.player}}
 	</div>
-	<div class="col-sm-6 text-left">
+</div>
+<div class="row">
+	<div class="col-xs-12 text-left">
 		{{message.text}}
 	</div>	
 </div>

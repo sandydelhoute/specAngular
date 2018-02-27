@@ -1,35 +1,62 @@
-<div class="col-sm-4">
-		<div class="panel panel-default" id="players">
-			<div class="panel-heading text-center">
-				<h3 class="panel-title">Liste des joueurs</h3>
-			</div>
-			<div class="panel-body">
-				<table width="100%" class="table table-striped">
-					<thead>
-					<tr>
-						<th>Pseudo</th>
-						<th>Role</th>
-						<th>Prêt ?</th>
-						<th>Maitre du jeu</th>
-					</tr>
-					</thead>
-					<tbody>
-						<tr listPlayers class="player"
-							*ngFor="let player of listPlayers" 
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-8">
+			<tchat [player]="player" [channel]="channel">
+			</tchat>
+		</div>
+		<div class="col-sm-4">
+			<div class="col-xs-12">
+				<div class="panel panel-default" id="players">
+					<div class="panel-heading text-center">
+						<div class="row">
+							<div class="col-xs-12">
+								<h3 class="panel-title">Liste des joueurs</h3>
+							</div>
+						</div>
+					</div>
+					<div class="panel-body">
+						<table width="100%" class="table table-striped">
+							<thead>
+								<tr>
+									<th>Pseudo</th>
+									<th>Prêt ?</th>
+									<th>Maitre du jeu</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr listPlayers class="player"
+								*ngFor="let player of listPlayer" 
 								[player]="player" 
-						>
-						</tr>
-					</tbody>
-				</table>	
-				
-				
+								>
+								</tr>
+							</tbody>
+						</table>	
+					</div>
+				</div>
 			</div>
-			<div class="panel-footer text-center">
-				<button class="btn btn-primary" #buttonReady (click)="setReady(ourself,buttonReady)" >Je suis prêt !</button>
+			<div class="col-xs-12">
+				<div class="panel panel-default" id="players">
+					<div class="panel-heading text-center">
+						Moi
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-xs-6">
+								name : {{ player.name }}
+							</div>
+							<div class="col-xs-6">
+								<img class="img-responsive" src='{{ player.role.carte }}' />
+
+							</div>
+						</div>
+					</div>
+
+					<div class="panel-footer text-center">
+						<button class="btn btn-primary" #buttonReady (click)="setReady()" >Je suis prêt !</button>
+						<button  *ngIf="allReady" class="btn btn-primary" #buttonBegin (click)="callLaunchGame()">Lancer La partie !</button>
+					</div>
+				</div>
 			</div>
 		</div>
-
-
-
 	</div>
-
+</div>

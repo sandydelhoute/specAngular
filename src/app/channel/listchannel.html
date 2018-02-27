@@ -8,6 +8,5 @@
 	{{ channel.name }}
 </td>
 <td>
-	
-	   <a routerLink="/waitplayer/{{ channel.name }}" (click)="joinChannel(channel.name)"><button [disabled]="!testButton" class="btn btn-primary" >Rejoindre</button></a>
+	<button [disabled]="!testButton" class="btn btn-primary"  (click)="joinChannel(channel.name)">Rejoindre</button>
 </td>

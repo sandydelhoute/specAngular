@@ -20,6 +20,26 @@ export class PartieService {
   		});
   	return ObservateSetChannel;
   }
+
+
+  setReady(userName,ChannelName){
+    this.socket.emit('setReady',userName,ChannelName);
+  }
+  
+  callLaunchGame(ChannelName){
+      console.log("je suis dans le  callLaunchGame");
+     this.socket.emit('callLaunchGame',ChannelName);
+   }
+
+   launchGame(){
+       let ObservableLaunGame = new Observable ((observer)=>{
+           this.socket.on('launchGame',(launchGameStatus)=>{
+               observer.next(launchGameStatus);
+           });
+       });
+   }
+
+
    
 
 }

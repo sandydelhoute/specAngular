@@ -1,6 +1,6 @@
 import { Component,Input,OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-import { ChannelService } from '../channel.service';
+import { ChannelService } from '../service/channel.service';
 
 @Component({
   	selector: 'channel',
@@ -20,7 +20,7 @@ export class Channel implements OnInit {
 
 		this.channelService.callListChannel();
 		this.channelService.listChannel().subscribe((listChannel)=>{
-			this.listChannel=listChannel;
+		this.listChannel=listChannel;
 		});
 		
 

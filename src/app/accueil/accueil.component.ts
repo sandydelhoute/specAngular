@@ -1,8 +1,8 @@
 import { Component,Input,OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import { LoginService } from '../login.service';
-import { ChannelService } from '../channel.service';
+import { LoginService } from '../service/login.service';
+import { ChannelService } from '../service/channel.service';
 import * as io from "socket.io-client";
 
 @Component({
@@ -23,11 +23,7 @@ export class Accueil implements OnInit {
 	}
 
 	ngOnInit() {
-		// this.channelService.accesChannel().subscribe((user:any)=>{
-		// 	this.ourself.name=user.name;
-
-		// });
-
+	
 		this.channelService.callListChannel();
 		this.channelService.listChannel().subscribe((listChannel)=>{
 			this.listChannel=listChannel;
@@ -35,8 +31,6 @@ export class Accueil implements OnInit {
 		this.channelService.statusCreateChannel().subscribe((status:any)=>{
 			if(status.create)
 			{
-
- 
 				this.router.navigate(['waitplayer',status.name]);
 			}
 			else
