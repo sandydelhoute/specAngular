@@ -2,93 +2,79 @@ import { Component,Input,OnInit} from '@angular/core';
 import { Router,ActivatedRoute, Params, Data } from '@angular/router';
 import { ChannelService } from '../service/channel.service';
 import { PartieService } from '../service/partie.service';
+import { LoginService } from '../service/login.service';
 import {Observable} from 'rxjs/Observable';
+import {Channel} from "../Model/Channel";
+import {Player} from "../Model/Player";
 
 @Component({
 	selector: 'waitPlayer',
 	templateUrl: './waitplayer.html',
-	providers:[PartieService,ChannelService]
+	providers:[PartieService,ChannelService,LoginService]
 })
 
 export class WaitPlayer implements OnInit {
 
-	private channel:any;
-	private listPlayer :any;
-	private player: any ;
+	private channel:Channel = new Channel();;
+	private listPlayer :Array<Player> ;
+	private player: Player;
 	private allReady :boolean;
 	
-	constructor(private channelService : ChannelService,private partieService:PartieService,private route: ActivatedRoute,
-		private router: Router)
-	{
-		this.player={'name':null,'role':{'roleName':null,'carte':null}};
+	constructor(
+		private channelService : ChannelService,
+		private partieService:PartieService,
+		private route: ActivatedRoute,
+		private router: Router,
+		private loginService : LoginService
+		){
+
+
 	}
 	
 	ngOnInit() {
-		var userName=sessionStorage.getItem('ourself');
-		var player;
+		if(sessionStorage.getItem('id') === null ){
+			this.router.navigate(['/']);
+		}
 		this.route.params.subscribe(params => {
-			this.channelService.getChannel(params['channel']);
+			this.channel.setName(params['channel']);
+			this.channelService.getChannel(this.channel);
 		});
 
-		this.channelService.setChannel().subscribe((channel:any)=>{
+		this.channelService.setChannel().subscribe((channel:Channel)=>{
 			this.channel=channel;
-			this.listPlayer=channel.listPlayer;
-			channel.listPlayer.map(function(user){
-				if(user.isMaster)
-				{
-					console.log("je suis master");
-					user.master = true;
-				}
-				else
-				{					
-					console.log("je suis pas master");
-					user.master = false;
-				}
-				if(user.name == userName)
-				{
-					player=user;
-				}
-			});
-			this.player=player;
+			this.listPlayer=channel.getListPlayer();
+		});
+		this.loginService.getPlayer(sessionStorage.getItem('id'),this.channel);
+
+		this.loginService.setPlayer().subscribe((playerInput:Player)=>{
+			this.player=playerInput;
 		});
 
-	this.channelService.updateChannel().subscribe((channel:any)=>{
-			    console.log(channel)
-
+		this.channelService.updateChannel().subscribe((channel:any)=>{
 			this.listPlayer=channel.listPlayer;
 		});
+
+		this.channelService.AllReady().subscribe((channel:any)=>{
+			this.allReady = true;
+		});
+
+		this.partieService.launchGame().subscribe((channel:any)=>{
+			this.router.navigate(['game',channel.name]);
+		});
+
 	}
 
-
-	callLaunchGame(){
-		console.log("je suis dnas le click callLaunchGame");
-		this.partieService.callLaunchGame(this.route.params.subscribe(params => {
-			return (params['channel']);
-		}));
+	callLaunchGame(channelName:String){
+		this.partieService.callLaunchGame(channelName);
 	}
 
 
 
 	setReady(){
-		let player=this.player;
-		let channel=this.channel;
-
-		this.partieService.setReady(
-			player,
-			channel
+		this.channelService.setReady(
+			this.player,
+			this.channel
 			);
-	}
-
-	areTheyReady(){
-		var allAreReady = true;
-
-		this.listPlayer.forEach(function(player){
-			if(player.isReady != true)
-				allAreReady = false;
-		});
-
-		return allAreReady;
-
 	}
 
 }

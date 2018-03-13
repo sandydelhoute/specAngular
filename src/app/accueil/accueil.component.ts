@@ -4,34 +4,42 @@ import {Observable} from 'rxjs/Observable';
 import { LoginService } from '../service/login.service';
 import { ChannelService } from '../service/channel.service';
 import * as io from "socket.io-client";
-
+import {Channel} from "../Model/Channel";
+import { Player } from "../Model/Player";
 @Component({
   	selector: 'accueil',
   	templateUrl: './layout-accueil.html',
 	providers:[ChannelService,LoginService]
-
 })
 export class Accueil implements OnInit {
 
-	private error;
-	private listChannel;
-	private errorChannel;
-	public ourself = {name:null};
+	private listChannel:Array<Channel> = new Array<Channel>();
+	private errorChannel:string;
+	private player:Player = new Player();
+	private userCreated = false;
+	constructor(
+		private channelService : ChannelService,
+		private loginService : LoginService,
+		private router : Router){
 
-	constructor(private channelService : ChannelService,private loginService : LoginService,private router : Router)
-	{
 	}
 
 	ngOnInit() {
 	
 		this.channelService.callListChannel();
-		this.channelService.listChannel().subscribe((listChannel)=>{
-			this.listChannel=listChannel;
+		this.channelService.listChannel().subscribe((listChannel:Array<Channel>)=>{
+				this.listChannel=listChannel;
+			
+		});
+		this.loginService.setPlayer().subscribe((playerInput:Player)=>{
+			this.player=playerInput;
+			sessionStorage.setItem('id',this.player.getId());
+			this.userCreated = true ;
 		});
 		this.channelService.statusCreateChannel().subscribe((status:any)=>{
 			if(status.create)
 			{
-				this.router.navigate(['waitplayer',status.name]);
+				this.router.navigate(['waitplayer',status.channel.name]);
 			}
 			else
 			{
@@ -43,33 +51,14 @@ export class Accueil implements OnInit {
 
 	}
 
-	buttonState(inverted = false){
-		if(this.ourself.hasOwnProperty('name') && this.ourself.name != null){
-			if(typeof inverted != 'undefined' && inverted == true)
-				return false;
-			else
-				return true;
-		}
-		else {
-			if(typeof inverted != 'undefined' && inverted == true)
-				return true;
-			else
-				return false;
-		}
-	}
+	
 
-	addPlayer(playername:string, errorMessage:HTMLElement){
-
+	createPlayer(playername:string, errorMessage:HTMLElement){
 		if(typeof playername != 'undefined' && playername != ''){
-
 			errorMessage.classList.add('hidden');
-			
-			this.ourself.name = playername;
-			sessionStorage.setItem('ourself', playername);
-
-			this.loginService.addPlayer(playername);
-
-			this.buttonState();
+			let player:Player = new Player();
+			player.setName(playername);
+			this.loginService.createPlayer(player);
 
 		} else {
 
@@ -82,10 +71,14 @@ export class Accueil implements OnInit {
 	createChannel(nameChannel : string, errorMessage:HTMLElement ){
 		if(nameChannel != ''){
 			errorMessage.classList.add('hidden');
-			var userName=sessionStorage.getItem('ourself');
-			this.channelService.createChannel(nameChannel,userName);
+			let channel : Channel = new Channel();
+			channel.setName(nameChannel);
+			this.channelService.createChannel(channel,this.player);
 		} else {
 			errorMessage.classList.remove('hidden');
+			setTimeout(()=>{
+					errorMessage.classList.add('hidden');
+			},3000)
 		}
 	}
 

@@ -1,12 +1,17 @@
 import { Component, Input } from '@angular/core';
+import { Player } from "../Model/Player";
+import { Role } from "../Model/Role";
 
 @Component({
   selector: 'rolesImg',
   templateUrl: './rolesImg.html',
-  styleUrls:['./rolesImg.css']
 })
 export class RolesImg  {
-	@Input() player:any;
+	@Input() player:Player;
 
+		constructor(){
+		}
+	ngoninit(){
+	}
 
 }

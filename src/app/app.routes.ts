@@ -1,14 +1,12 @@
 import { Routes,RouterModule } from '@angular/router';
 import { Partie } from './partie/partie.component';
 import { Accueil } from './accueil/accueil.component';
-import { Channel } from './channel/channel.component';
 import { WaitPlayer } from './waitplayer/waitplayer.component';
 
 export const routes: Routes = [
   { path: '', component: Accueil },
-  { path: 'channel', component: Channel },
   { path: 'game/:channel', component: Partie },
-  { path: 'waitplayer/:channel', component: WaitPlayer, }
+  { path: 'waitplayer/:channel', component: WaitPlayer}
 ];
 
 export const appRoutingProviders: any[] = [

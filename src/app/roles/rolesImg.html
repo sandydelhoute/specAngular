@@ -1,1 +1,8 @@
-<img id="imgrole" src="{{player.role.carte}}" class="img-responsive" alt="{{player.role.roleName}}" />
+<div class="row">
+	<div class="col-xs-6">
+		name : {{ player?.name }}
+	</div> 
+	 <div class="col-xs-6" *ngIf="player?.role.carte">
+			<img class="img-responsive" src='{{ player?.role.carte }}' />
+	</div>  
+</div>

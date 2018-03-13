@@ -1,7 +1,8 @@
 import { Component, Input,OnInit } from '@angular/core';
 import {Router } from '@angular/router';
 import { ChannelService } from '../service/channel.service';
-
+import {Channel} from "../Model/Channel";
+import { Player } from "../Model/Player";
 @Component({
 	selector: '[listchannel]',
 	templateUrl: './listchannel.html',
@@ -9,12 +10,20 @@ import { ChannelService } from '../service/channel.service';
 })
 
 export class ListChannel implements OnInit {
-	@Input() channel:any;
-	@Input() testButton:any;
-	constructor(private channelService : ChannelService,private router : Router)
-	{
+	@Input() playerNameCreate:boolean;
+	@Input() player:Player;
+	@Input() channel:Channel;
+ 	constructor(private channelService : ChannelService,private router : Router)
+	{		
+	}
+
+	joinChannel(channelName:string){
+		this.channelService.JoinChannel(channelName,this.player);
+	}
+
+	ngOnInit(){
 		this.channelService.accesChannel().subscribe((status:any)=>{
-			console.log(status)
+
 			if(status.access)
 			{
 				this.router.navigate(['waitplayer',status.name]);
@@ -25,14 +34,5 @@ export class ListChannel implements OnInit {
 			}
 
 		});
-	}
-
-	joinChannel(channelName:string){
-		var userName=sessionStorage.getItem('ourself');
-		this.channelService.JoinChannel(channelName,userName);
-	}
-
-	ngOnInit(){
-
 	}
 }

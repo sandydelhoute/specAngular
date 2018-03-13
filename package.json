@@ -45,15 +45,15 @@
     "tslint": "^4.3.0",
     "typescript": "~2.0.3"
   },
-  "description": "This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.28.3.",
+  "description": "This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.28.3. . Project is develops in Estiam school",
   "main": "karma.conf.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Voxran/LoupGarou.git"
+    "url": "https://bitbucket.org/sandyDelhoute/specangular"
   },
   "author": "",
   "bugs": {
-    "url": "https://github.com/Voxran/LoupGarou/issues"
+    "url": "https://bitbucket.org/sandyDelhoute/specangular"
   },
-  "homepage": "https://github.com/Voxran/LoupGarou#readme"
+  "homepage": "https://bitbucket.org/sandyDelhoute/specangular#readme"
 }

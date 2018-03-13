@@ -16,16 +16,16 @@
 					<div #errorMessage class="hidden alert alert-danger">Votre nom ne peut pas être vide ou est déjà pris.</div>
 					<label for="nameInput">Merci d'entrer votre pseudo : </label>
 					<input #nameInput type="text" 
-						[disabled]="buttonState()" 
-						(keyup.enter)="addPlayer(nameInput.value, errorMessage)"
+						[disabled]="userCreated" 
+						(keyup.enter)="createPlayer(nameInput.value, errorMessage)"
 					/>
 				</div>
 
 				<div class="panel-footer text-center">
 					<button 
 						class="btn btn-primary" 
-						[disabled]="buttonState()"
-						(click)="addPlayer(nameInput.value, errorMessage)" 
+						[disabled]="userCreated"
+						(click)="createPlayer(nameInput.value, errorMessage)" 
 					>Valider</button>
 				</div>
 			</div>
@@ -58,7 +58,9 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr listchannel *ngFor="let channel of listChannel" [channel]="channel" [testButton]="buttonState()" ></tr>
+							<tr listchannel *ngFor="let channel of listChannel"  [playerNameCreate]="!userCreated" [player]="player" [channel]="channel"></tr> 
+							
+
 						</tbody>
 					</table>
 				</div>
@@ -70,16 +72,16 @@
 					</div>
 					<div class="panel-body">
 						<div #errorNameNull class="hidden alert alert-danger">Merci de rentrer un nom pour votre chanel</div>
-						<input type='text' 
-							#nameChannel [disabled]="buttonState(true)" 
+							<input type='text' 
+							#nameChannel [disabled]="!userCreated" 
 							(keyup.enter)="createChannel(nameChannel.value, errorNameNull)" 
 							/>
-						<button 
-							[disabled]="buttonState(true)" 
+							<button 
+							[disabled]="!userCreated" 
 							(click)="createChannel(nameChannel.value, errorNameNull)" 
-							class="btn btn-primary"
-						>
-						Créer</button>
+							class="btn btn-primary">
+								Créer
+							</button>
 					</div>
 				</div>
 			</div>

@@ -1,12 +1,11 @@
 <td>
 	{{ channel.id }}
-</td>
 <td>
-	{{ channel.nbrPlayer }}
+	{{ channel.listPlayer.length }}
 </td>
 <td>
 	{{ channel.name }}
-</td>
+</td> 
 <td>
-	<button [disabled]="!testButton" class="btn btn-primary"  (click)="joinChannel(channel.name)">Rejoindre</button>
+	<button [disabled]="playerNameCreate" class="btn btn-primary"  (click)="joinChannel(channel.name)">Rejoindre</button>
 </td>

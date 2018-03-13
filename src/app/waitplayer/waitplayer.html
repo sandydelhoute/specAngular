@@ -25,7 +25,7 @@
 							</thead>
 							<tbody>
 								<tr listPlayers class="player"
-								*ngFor="let player of listPlayer" 
+								*ngFor="let player of channel.listPlayer" 
 								[player]="player" 
 								>
 								</tr>
@@ -40,20 +40,16 @@
 						Moi
 					</div>
 					<div class="panel-body">
-						<div class="row">
-							<div class="col-xs-6">
-								name : {{ player.name }}
-							</div>
-							<div class="col-xs-6">
-								<img class="img-responsive" src='{{ player.role.carte }}' />
-
-							</div>
-						</div>
+						<rolesImg [player]="player"></rolesImg>
 					</div>
 
 					<div class="panel-footer text-center">
-						<button class="btn btn-primary" #buttonReady (click)="setReady()" >Je suis prêt !</button>
-						<button  *ngIf="allReady" class="btn btn-primary" #buttonBegin (click)="callLaunchGame()">Lancer La partie !</button>
+						<div class="row">
+							<button class="btn btn-primary" #buttonReady (click)="setReady()" >Je suis prêt !</button>
+						</div>
+						<div class="row">
+							<button  *ngIf="allReady" class="btn btn-primary" #buttonBegin (click)="callLaunchGame(channel.name)">Lancer La partie !</button>
+						</div>
 					</div>
 				</div>
 			</div>
