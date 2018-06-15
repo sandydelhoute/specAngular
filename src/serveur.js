@@ -305,13 +305,16 @@ socket.on('callLaunchGame',function(channelName){
 // add Message in tchat
 socket.on('addmessage',function(message,channelInput){
 
+
+
 	listChannel.map(function(channel){
 
 		if(channel.name == channelInput.name)
 		{
 			channel.listMessageAll.push(message);
-			io.emit('newmessage',message);
-			socket.to(channel.name).emit('newmessage',message);
+			console.log(channel.listMessageAll);
+			io.emit('newmessage',channel.listMessageAll);
+			socket.to(channel.name).emit('newmessage',channel.listMessageAll);
 		}
 
 	});

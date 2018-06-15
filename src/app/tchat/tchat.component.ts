@@ -19,8 +19,8 @@ export class Tchat  {
 	}
 	ngOnInit(){
 
-		this.tchatService.receiveMessage().subscribe((message:Message)=>{
-			//this.channel.getListMessageAll().addListMessageAll(message);
+		this.tchatService.receiveMessage().subscribe((listMessageAll:Array<Message>)=>{
+			this.channel.setListMessageAll(listMessageAll);
 		});
 	}
 

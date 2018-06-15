@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Message } from "../Model/Message";
 
 @Component({
   selector: 'listMessages',
@@ -7,6 +8,10 @@ import { Component, Input } from '@angular/core';
 
 })
 export class ListMessages  {
-	@Input() message:any;
+	@Input() message:Message;
+
+	constructor(){
+		console.log(this.message);
+	}
 
 }

@@ -1,14 +1,14 @@
 <div class="message">
 <div class="row">
 	<div class="col-xs-12 col-sm-3 text-left">
-		date : {{message.date | date:"dd/MM/yyyy H:m:s"}}
+		date : {{message?.datePublish | date:"dd/MM/yyyy H:m:s"}}
 	</div>
 		<div class="col-xs-12 col-sm-9 text-left">
-		player : {{message.player}}
+		player : {{message?.player?.name}}
 	</div>
 </div>
 <div class="row">
 	<div class="col-xs-12 text-left">
-		{{message.text}}
+		{{message?.textContent}}
 	</div>	
 </div>
