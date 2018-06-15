@@ -1,8 +1,8 @@
 import { Component,Input,OnInit} from '@angular/core';
 import { Router,ActivatedRoute, Params, Data } from '@angular/router';
-import { ChannelService } from '../service/channel.service';
-import { PartieService } from '../service/partie.service';
-import { LoginService } from '../service/login.service';
+import { ChannelService } from '../Service/channel.service';
+import { PartieService } from '../Service/partie.service';
+import { LoginService } from '../Service/login.service';
 import {Observable} from 'rxjs/Observable';
 import {Channel} from "../Model/Channel";
 import {Player} from "../Model/Player";

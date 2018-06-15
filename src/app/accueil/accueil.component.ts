@@ -1,8 +1,8 @@
 import { Component,Input,OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import { LoginService } from '../service/login.service';
-import { ChannelService } from '../service/channel.service';
+import { LoginService } from '../Service/login.service';
+import { ChannelService } from '../Service/channel.service';
 import * as io from "socket.io-client";
 import {Channel} from "../Model/Channel";
 import { Player } from "../Model/Player";

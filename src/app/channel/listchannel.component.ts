@@ -1,6 +1,6 @@
 import { Component, Input,OnInit } from '@angular/core';
 import {Router } from '@angular/router';
-import { ChannelService } from '../service/channel.service';
+import { ChannelService } from '../Service/channel.service';
 import {Channel} from "../Model/Channel";
 import { Player } from "../Model/Player";
 @Component({

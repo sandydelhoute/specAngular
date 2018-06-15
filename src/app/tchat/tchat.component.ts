@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TchatService } from '../service/Tchat.service';
+import { TchatService } from '../Service/tchat.service';
 import * as io from "socket.io-client";
 import { Player } from "../Model/Player";
 import { Channel } from "../Model/Channel";

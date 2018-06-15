@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ChannelService } from '../service/channel.service';
+import { ChannelService } from '../Service/channel.service';
 import { Router,ActivatedRoute, Params, Data } from '@angular/router';
 
 @Component({
