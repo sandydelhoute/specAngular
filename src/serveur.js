@@ -247,21 +247,34 @@ socket.on('joinChannel',(channelName,player)=>{
 
 //INFORMATION CHANNEL AFTER JOIN
 socket.on('getChannel',function(channelInput){
-	listChannel.map(function(channel){
-		if(channel.name == channelInput.name){
-			socket.join(channel.name);
-			socket.emit('setChannel',channel);
-			socket.broadcast.to(channel.name).emit('setChannel',channel);
-		}
-	});
+	var channel;
+	if(listChannel.length == 0){
+		socket.emit('setChannel',null);
+	}
+	else{
+		listChannel.map(function(channel){
+			if(channel.name == channelInput.name){
+				socket.join(channel.name);
+				socket.emit('setChannel',channel);
+				socket.broadcast.to(channel.name).emit('setChannel',channel);
 
+			}
+
+		});
+
+	}
 
 });
 
 // IS READY IN CHANNEL
 socket.on('setReady',function(userInput,channelInput){
 	var allReady = 0;
+	var channelReturn;
 	listChannel.map(function(channel){
+		channelReturn = channel;
+		console.log("je suis dans le setReady")
+		console.log(channelInput);
+
 		if(channel.name == channelInput.name)
 		{
 			channel.listPlayer.map(function(user)
@@ -279,15 +292,13 @@ socket.on('setReady',function(userInput,channelInput){
 				{
 					console.log("je suis dnas le min player");
 
-					socket.to(channel.Name).emit('allReady',channel);
 				}
-			});
-			
-
+				socket.to(channel.name).emit('allReady',channel);
+			});	
 		}
 	});
-	socket.emit('updateChannel',channel);
-	socket.to(channel.name).emit('updateChannel',channel);
+	socket.emit('updateChannel',channelReturn);
+	socket.to(channelReturn.name).emit('updateChannel',channelReturn);
 });
 
 

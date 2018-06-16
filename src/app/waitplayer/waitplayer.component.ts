@@ -32,6 +32,7 @@ export class WaitPlayer implements OnInit {
 	}
 	
 	ngOnInit() {
+
 		if(sessionStorage.getItem('id') === null ){
 			this.router.navigate(['/']);
 		}
@@ -41,7 +42,11 @@ export class WaitPlayer implements OnInit {
 		});
 
 		this.channelService.setChannel().subscribe((channel:Channel)=>{
+			if(channel == null){
+				this.router.navigate(['/']);
+			}
 			this.channel=channel;
+
 			this.listPlayer=channel.getListPlayer();
 		});
 		this.loginService.getPlayer(sessionStorage.getItem('id'),this.channel);

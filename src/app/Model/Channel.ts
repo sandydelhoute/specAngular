@@ -61,6 +61,9 @@ export class Channel{
 		this.listPlayer=listPlayer;
 	}
 	static fromJson(json:Object):Channel{
+		if(json == null){
+			return null;
+		}
 		let channel = new Channel();
 		if(typeof json['id'] !== "undefined" ){
 			channel.setId(json['id']);
