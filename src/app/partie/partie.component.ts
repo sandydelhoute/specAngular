@@ -23,7 +23,7 @@ export class Partie  {
 				this.channelService.getChannel(params['channel']);
 		});
 
-		this.channelService.setChannel().subscribe((channel:any)=>{
+		this.channelService.updateChannel().subscribe((channel:any)=>{
 			this.channel=channel;
 			this.listPlayer=channel.listPlayer;
 			channel.listPlayer.map(function(user){

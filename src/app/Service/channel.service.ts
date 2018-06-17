@@ -49,23 +49,15 @@ export class ChannelService {
 	}
 
   getChannel(channelName){
+  	console.log(channelName);
   	this.socket.emit('getChannel',channelName);
   }
 
 
-  setChannel(){
-  		let ObservateSetChannel = new Observable((observer)=>{
-  			this.socket.on('setChannel',(channel)=>{
-  				observer.next(Channel.fromJson(channel));
-  			});
-
-  		});
-  	return ObservateSetChannel;
-  }
   updateChannel(){
   	let ObservateUpdateChannel = new Observable((observer)=>{
   			this.socket.on('updateChannel',(channel)=>{
-  				observer.next(channel);
+  				observer.next(Channel.fromJson(channel));
   			});
 
   		});

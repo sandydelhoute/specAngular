@@ -1,7 +1,7 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-8">
-			<tchat [player]="player" [channel]="channel">
+			<tchat [player]="player" [channel]="channel" >
 			</tchat>
 		</div>
 		<div class="col-sm-4">
@@ -27,7 +27,7 @@
 								<tr listPlayers class="player"
 								*ngFor="let player of channel.listPlayer" 
 								[player]="player" 
-								>
+								  >
 								</tr>
 							</tbody>
 						</table>	

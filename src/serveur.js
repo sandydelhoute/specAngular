@@ -193,6 +193,8 @@ socket.on('createChannel',(channelInput,playerInput)=>{
 		channelInput.listMessageLoup=[];
 		channelInput.listPlayer=[];
 		playerInput.role=setRandomRole(channelInput.minPlayer,channelInput.listPlayer);
+		playerInput.isReady = false;
+		playerInput.isMaster= true;
 		channelInput.nbrPlayer=channelInput.listPlayer.length;
 		channelInput.listPlayer.push(playerInput);
 		listChannel.push(channelInput);
@@ -247,20 +249,25 @@ socket.on('joinChannel',(channelName,player)=>{
 
 //INFORMATION CHANNEL AFTER JOIN
 socket.on('getChannel',function(channelInput){
-	var channel;
+	var channelReturn = null;
 	if(listChannel.length == 0){
-		socket.emit('setChannel',null);
+		socket.emit('updateChannel',null);
 	}
 	else{
 		listChannel.map(function(channel){
 			if(channel.name == channelInput.name){
-				socket.join(channel.name);
-				socket.emit('setChannel',channel);
-				socket.broadcast.to(channel.name).emit('setChannel',channel);
-
+				channelReturn = channel;
+				console.log(channelReturn)
 			}
-
 		});
+		if(channelReturn != null){
+			socket.join(channelReturn.name);
+			socket.emit('updateChannel',channelReturn);
+			socket.broadcast.to(channelReturn.name).emit('updateChannel',channelReturn);
+		}
+		else{
+			socket.emit('updateChannel',null);
+		}
 
 	}
 
@@ -272,28 +279,20 @@ socket.on('setReady',function(userInput,channelInput){
 	var channelReturn;
 	listChannel.map(function(channel){
 		channelReturn = channel;
-		console.log("je suis dans le setReady")
-		console.log(channelInput);
-
 		if(channel.name == channelInput.name)
 		{
 			channel.listPlayer.map(function(user)
 			{
-
-				if(user.name == userInput.name)
+				if(user.name == userInput.name & !user.isReady)
 				{
 					user.isReady=true;
-				}
-				if(user.isReady)
-				{
+					console.log(user);
 					allReady ++;
 				}
 				if(allReady >= channel.minPlayer)
 				{
-					console.log("je suis dnas le min player");
-
+					socket.to(channel.name).emit('allReady',channel);
 				}
-				socket.to(channel.name).emit('allReady',channel);
 			});	
 		}
 	});
@@ -323,6 +322,14 @@ socket.on('addmessage',function(message,channelInput){
 		if(channel.name == channelInput.name)
 		{
 			channel.listMessageAll.push(message);
+			channel.listMessageAll.sort((a,b)=>{
+				if (a.datePublish<b.datePublish)
+					return 1;
+				else if(a.datePublish >b.datePublish)
+					return -1;
+				else
+					return 0;
+			});
 			console.log(channel.listMessageAll);
 			io.emit('newmessage',channel.listMessageAll);
 			socket.to(channel.name).emit('newmessage',channel.listMessageAll);

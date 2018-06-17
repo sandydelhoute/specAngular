@@ -11,7 +11,6 @@ export class ListMessages  {
 	@Input() message:Message;
 
 	constructor(){
-		console.log(this.message);
 	}
 
 }

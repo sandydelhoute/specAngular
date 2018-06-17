@@ -3,28 +3,33 @@
 	<div class="panel-body">
 		<div id="container-message" >
 
-		<listMessages 
-			*ngFor="let message of channel.listmessageAll" 
-			[message]="message"
-			>
-			</listMessages> 
 
-		</div>
+			<listMessages 
+
+				*ngFor="let message of 
+				(channel.listmessageAll  ? channel.listmessageAll  : [])"
+				[message]="message"
+				>
+			</listMessages>
+
+
+
 	</div>
-	<div class="panel-footer">
-		<div class="row">
-			<div #errorMessage class="hidden alert alert-danger">Le champ texte ne peut pas être vide</div>
-		</div>
-		<div class="row">
-			<form ng-model=[message] class="text-center">
-				<label>Votre message : </label>
-				<input 
-				type="text" #enterText />
-				<button 
-				class="btn btn-primary"
-				(click)="submitMessage(enterText.value, errorMessage)"
-				>Envoyer</button>
-			</form>
-		</div>
+</div>
+<div class="panel-footer">
+	<div class="row">
+		<div #errorMessage class="hidden alert alert-danger">Le champ texte ne peut pas être vide</div>
 	</div>
+	<div class="row">
+		<form ng-model=[message] class="text-center">
+			<label>Votre message : </label>
+			<input 
+			type="text" #enterText />
+			<button 
+			class="btn btn-primary"
+			(click)="submitMessage(enterText.value, errorMessage)"
+			>Envoyer</button>
+		</form>
+	</div>
+</div>
 </div>

@@ -41,30 +41,27 @@ export class WaitPlayer implements OnInit {
 			this.channelService.getChannel(this.channel);
 		});
 
-		this.channelService.setChannel().subscribe((channel:Channel)=>{
-			if(channel == null){
-				this.router.navigate(['/']);
-			}
-			this.channel=channel;
-
-			this.listPlayer=channel.getListPlayer();
-		});
 		this.loginService.getPlayer(sessionStorage.getItem('id'),this.channel);
 
 		this.loginService.setPlayer().subscribe((playerInput:Player)=>{
 			this.player=playerInput;
 		});
 
-		this.channelService.updateChannel().subscribe((channel:any)=>{
-			this.listPlayer=channel.listPlayer;
+		this.channelService.updateChannel().subscribe((channel:Channel)=>{
+				if(channel == null){
+				this.router.navigate(['/']);
+			}
+			else{
+				this.channel=channel;
+			}
 		});
 
-		this.channelService.AllReady().subscribe((channel:any)=>{
+		this.channelService.AllReady().subscribe((channel:Channel)=>{
 			this.allReady = true;
 		});
 
-		this.partieService.launchGame().subscribe((channel:any)=>{
-			this.router.navigate(['game',channel.name]);
+		this.partieService.launchGame().subscribe((channel:Channel)=>{
+			this.router.navigate(['game',channel.getName()]);
 		});
 
 	}
